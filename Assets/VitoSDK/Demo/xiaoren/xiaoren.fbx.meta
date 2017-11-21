@@ -1,0 +1,116 @@
+fileFormatVersion: 2
+guid: 4b270edc2dd944e46b78bbe0a4c7413e
+timeCreated: 1484113632
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: xiaoren_shenti
+    100004: xiaoren_tou
+    100006: xiaoren_tou 1
+    100008: xiaoren_youmeimao
+    100010: xiaoren_youshou
+    100012: xiaoren_youyan
+    100014: xiaoren_zuomeimao
+    100016: xiaoren_zuoshou
+    100018: xiaoren_zuoyan
+    400000: //RootNode
+    400002: xiaoren_shenti
+    400004: xiaoren_tou
+    400006: xiaoren_tou 1
+    400008: xiaoren_youmeimao
+    400010: xiaoren_youshou
+    400012: xiaoren_youyan
+    400014: xiaoren_zuomeimao
+    400016: xiaoren_zuoshou
+    400018: xiaoren_zuoyan
+    2300000: xiaoren_shenti
+    2300002: xiaoren_tou 1
+    2300004: xiaoren_youmeimao
+    2300006: xiaoren_youshou
+    2300008: xiaoren_youyan
+    2300010: xiaoren_zuomeimao
+    2300012: xiaoren_zuoshou
+    2300014: xiaoren_zuoyan
+    3300000: xiaoren_shenti
+    3300002: xiaoren_tou 1
+    3300004: xiaoren_youmeimao
+    3300006: xiaoren_youshou
+    3300008: xiaoren_youyan
+    3300010: xiaoren_zuomeimao
+    3300012: xiaoren_zuoshou
+    3300014: xiaoren_zuoyan
+    4300000: xiaoren_youshou
+    4300002: xiaoren_zuoshou
+    4300004: xiaoren_shenti
+    4300006: xiaoren_tou
+    4300008: xiaoren_youyan
+    4300010: xiaoren_zuoyan
+    4300012: xiaoren_youmeimao
+    4300014: xiaoren_zuomeimao
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

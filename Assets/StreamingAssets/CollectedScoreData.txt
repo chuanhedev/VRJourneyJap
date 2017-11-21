@@ -1,0 +1,1 @@
+{"5259ed2777c178c941c956865eaea470e4ec7d17":[{"sumScore":10,"score1":4,"score2":5,"score3":6,"sumTime":22.0,"dataType":2,"level":1,"levelName":"测试场景1"}],"7fa28d57e98aa44ecd550eb6a7a85450":[{"sumScore":11,"score1":6,"score2":7,"score3":5,"sumTime":30.0,"dataType":2,"level":1,"levelName":"测试场景1"}]}
