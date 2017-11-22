@@ -28,7 +28,7 @@ public class FacadeManager : MonoBehaviour
         LoadCallback += OnLoadCallback;
 
         RegisterUpdatePano();
-     
+
     }
 
     void OnEnable()
@@ -52,6 +52,20 @@ public class FacadeManager : MonoBehaviour
         {
             RequestUpdatePano("Osaka/Loft");
         }
+    }
+
+    public T AddOrDestoryComponment<T>(GameObject go, bool isAdd) where T : Component
+    {
+        T t = go.GetComponent<T>();
+        if (isAdd)
+        {
+            if (t == null) t = go.AddComponent<T>();
+        }
+        else
+        {
+            if (t != null) Destroy(t);
+        }
+        return t;
     }
 
     /// <summary>

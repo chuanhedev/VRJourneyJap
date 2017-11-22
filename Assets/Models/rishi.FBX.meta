@@ -1,0 +1,567 @@
+fileFormatVersion: 2
+guid: 6112fb713ea03ab48bb1e65cb957ad38
+timeCreated: 1511163591
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: xiadele_Box01
+    100004: xiadele_Box01 1
+    100006: xiadele_Box02
+    100008: xiadele_Box02 1
+    100010: xiadele_Box02 2
+    100012: xiadele_Box03
+    100014: xiadele_Box04
+    100016: xiadele_Box05
+    100018: xiadele_Camera01
+    100020: xiadele_Camera01.Target
+    100022: xiadele_ChamferBox03
+    100024: xiadele_ChamferBox10
+    100026: xiadele_ChamferBox11
+    100028: xiadele_ChamferBox12
+    100030: xiadele_ChamferBox18
+    100032: xiadele_ChamferBox19
+    100034: xiadele_ChamferBox20
+    100036: xiadele_ChamferBox21
+    100038: xiadele_ChamferBox22
+    100040: xiadele_ChamferBox23
+    100042: xiadele_ChamferBox24
+    100044: xiadele_ChamferBox25
+    100046: xiadele_ChamferBox26
+    100048: xiadele_ChamferBox27
+    100050: xiadele_ChamferBox28
+    100052: xiadele_ChamferBox29
+    100054: xiadele_ChamferBox30
+    100056: xiadele_Circle01
+    100058: xiadele_Circle02
+    100060: xiadele_Circle03
+    100062: xiadele_Circle04
+    100064: xiadele_Circle05
+    100066: xiadele_Circle06
+    100068: xiadele_Circle07
+    100070: xiadele_Circle08
+    100072: xiadele_Circle09
+    100074: xiadele_Circle10
+    100076: xiadele_Circle11
+    100078: xiadele_Circle12
+    100080: xiadele_Circle13
+    100082: xiadele_Group1871018650
+    100084: xiadele_Group1871018651
+    100086: xiadele_Group1871018652
+    100088: xiadele_Group1871018653
+    100090: xiadele_Group1871018654
+    100092: xiadele_Group1871018655
+    100094: xiadele_Line01
+    100096: xiadele_Line01 1
+    100098: xiadele_Line01 2
+    100100: xiadele_Line02
+    100102: xiadele_Line021
+    100104: xiadele_Line03
+    100106: xiadele_Line03 1
+    100108: xiadele_Line04
+    100110: xiadele_Line041
+    100112: xiadele_Line05
+    100114: xiadele_Line07
+    100116: xiadele_Line08
+    100118: xiadele_Line09
+    100120: xiadele_Line10
+    100122: xiadele_Line11
+    100124: xiadele_Line12
+    100126: xiadele_Line13
+    100128: xiadele_Line14
+    100130: xiadele_Line15
+    100132: xiadele_Loft01
+    100134: xiadele_Loft02
+    100136: xiadele_Loft03
+    100138: xiadele_obj31_022_obj_01
+    100140: xiadele_Object01
+    100142: xiadele_Object05
+    100144: xiadele_Object06
+    100146: xiadele_Object07
+    100148: xiadele_Object08
+    100150: xiadele_Object09
+    100152: xiadele_PhotometricLight01
+    100154: xiadele_PhotometricLight02
+    100156: xiadele_PhotometricLight03
+    100158: xiadele_PhotometricLight04
+    100160: xiadele_PhotometricLight05
+    100162: xiadele_PhotometricLight06
+    100164: xiadele_PhotometricLight07
+    100166: xiadele_Rectangle01
+    100168: xiadele_Rectangle01 1
+    100170: xiadele_Rectangle02
+    100172: xiadele_Rectangle03
+    100174: xiadele_Rectangle04
+    100176: xiadele_Rectangle05
+    100178: xiadele_Rectangle06
+    100180: xiadele_Rectangle07
+    100182: xiadele_Sphere01
+    100184: xiadele_TPhotometricLight01
+    100186: xiadele_TPhotometricLight01.Target
+    100188: xiadele_TPhotometricLight02
+    100190: xiadele_TPhotometricLight02.Target
+    100192: xiadele_TPhotometricLight03
+    100194: xiadele_TPhotometricLight03.Target
+    100196: "xiadele_VR\u706F\u514901"
+    100198: "xiadele_VR\u706F\u514902"
+    100200: "xiadele_VR\u706F\u514903"
+    100202: "xiadele_VR\u706F\u514904"
+    100204: "xiadele_VR\u706F\u514905"
+    100206: "xiadele_VR\u706F\u514906"
+    100208: "xiadele_VR\u706F\u514907"
+    100210: "xiadele_VR\u706F\u514908"
+    100212: "xiadele_VR\u706F\u514909"
+    100214: "xiadele_VR\u706F\u514910"
+    100216: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430"
+    100218: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430 1"
+    100220: "xiadele_\u041E\u0442\u0440\u0430\u0436\u0430\u0442\u0435\u043B\u044C"
+    100222: "xiadele_\u5BF9\u8C6101"
+    100224: "xiadele_\u5BF9\u8C6102"
+    100226: "xiadele_\u7EC431"
+    100228: "xiadele_\u7EC432"
+    100230: "xiadele_\u7EC433"
+    100232: "xiadele_\u7EC434"
+    100234: "xiadele_\u7EC435"
+    100236: "xiadele_\u7EC436"
+    100238: "xiadele_\u7EC437"
+    100240: "xiadele_\u7EC438"
+    100242: "xiadele_\u7EC439"
+    100244: "xiadele_\u7EC440"
+    100246: "xiadele_\u7EC441"
+    100248: "xiadele_\u7EC442"
+    100250: "xiadele_\u7EC443"
+    100252: "xiadele_\u7EC444"
+    100254: "xiadele_\u7EC445"
+    100256: "xiadele_\u7EC446"
+    100258: "xiadele_\u7EC447"
+    100260: "xiadele_\u7EC448"
+    100262: "xiadele_\u7EC449"
+    100264: "xiadele_\u7EC450"
+    400000: //RootNode
+    400002: xiadele_Box01
+    400004: xiadele_Box01 1
+    400006: xiadele_Box02
+    400008: xiadele_Box02 1
+    400010: xiadele_Box02 2
+    400012: xiadele_Box03
+    400014: xiadele_Box04
+    400016: xiadele_Box05
+    400018: xiadele_Camera01
+    400020: xiadele_Camera01.Target
+    400022: xiadele_ChamferBox03
+    400024: xiadele_ChamferBox10
+    400026: xiadele_ChamferBox11
+    400028: xiadele_ChamferBox12
+    400030: xiadele_ChamferBox18
+    400032: xiadele_ChamferBox19
+    400034: xiadele_ChamferBox20
+    400036: xiadele_ChamferBox21
+    400038: xiadele_ChamferBox22
+    400040: xiadele_ChamferBox23
+    400042: xiadele_ChamferBox24
+    400044: xiadele_ChamferBox25
+    400046: xiadele_ChamferBox26
+    400048: xiadele_ChamferBox27
+    400050: xiadele_ChamferBox28
+    400052: xiadele_ChamferBox29
+    400054: xiadele_ChamferBox30
+    400056: xiadele_Circle01
+    400058: xiadele_Circle02
+    400060: xiadele_Circle03
+    400062: xiadele_Circle04
+    400064: xiadele_Circle05
+    400066: xiadele_Circle06
+    400068: xiadele_Circle07
+    400070: xiadele_Circle08
+    400072: xiadele_Circle09
+    400074: xiadele_Circle10
+    400076: xiadele_Circle11
+    400078: xiadele_Circle12
+    400080: xiadele_Circle13
+    400082: xiadele_Group1871018650
+    400084: xiadele_Group1871018651
+    400086: xiadele_Group1871018652
+    400088: xiadele_Group1871018653
+    400090: xiadele_Group1871018654
+    400092: xiadele_Group1871018655
+    400094: xiadele_Line01
+    400096: xiadele_Line01 1
+    400098: xiadele_Line01 2
+    400100: xiadele_Line02
+    400102: xiadele_Line021
+    400104: xiadele_Line03
+    400106: xiadele_Line03 1
+    400108: xiadele_Line04
+    400110: xiadele_Line041
+    400112: xiadele_Line05
+    400114: xiadele_Line07
+    400116: xiadele_Line08
+    400118: xiadele_Line09
+    400120: xiadele_Line10
+    400122: xiadele_Line11
+    400124: xiadele_Line12
+    400126: xiadele_Line13
+    400128: xiadele_Line14
+    400130: xiadele_Line15
+    400132: xiadele_Loft01
+    400134: xiadele_Loft02
+    400136: xiadele_Loft03
+    400138: xiadele_obj31_022_obj_01
+    400140: xiadele_Object01
+    400142: xiadele_Object05
+    400144: xiadele_Object06
+    400146: xiadele_Object07
+    400148: xiadele_Object08
+    400150: xiadele_Object09
+    400152: xiadele_PhotometricLight01
+    400154: xiadele_PhotometricLight02
+    400156: xiadele_PhotometricLight03
+    400158: xiadele_PhotometricLight04
+    400160: xiadele_PhotometricLight05
+    400162: xiadele_PhotometricLight06
+    400164: xiadele_PhotometricLight07
+    400166: xiadele_Rectangle01
+    400168: xiadele_Rectangle01 1
+    400170: xiadele_Rectangle02
+    400172: xiadele_Rectangle03
+    400174: xiadele_Rectangle04
+    400176: xiadele_Rectangle05
+    400178: xiadele_Rectangle06
+    400180: xiadele_Rectangle07
+    400182: xiadele_Sphere01
+    400184: xiadele_TPhotometricLight01
+    400186: xiadele_TPhotometricLight01.Target
+    400188: xiadele_TPhotometricLight02
+    400190: xiadele_TPhotometricLight02.Target
+    400192: xiadele_TPhotometricLight03
+    400194: xiadele_TPhotometricLight03.Target
+    400196: "xiadele_VR\u706F\u514901"
+    400198: "xiadele_VR\u706F\u514902"
+    400200: "xiadele_VR\u706F\u514903"
+    400202: "xiadele_VR\u706F\u514904"
+    400204: "xiadele_VR\u706F\u514905"
+    400206: "xiadele_VR\u706F\u514906"
+    400208: "xiadele_VR\u706F\u514907"
+    400210: "xiadele_VR\u706F\u514908"
+    400212: "xiadele_VR\u706F\u514909"
+    400214: "xiadele_VR\u706F\u514910"
+    400216: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430"
+    400218: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430 1"
+    400220: "xiadele_\u041E\u0442\u0440\u0430\u0436\u0430\u0442\u0435\u043B\u044C"
+    400222: "xiadele_\u5BF9\u8C6101"
+    400224: "xiadele_\u5BF9\u8C6102"
+    400226: "xiadele_\u7EC431"
+    400228: "xiadele_\u7EC432"
+    400230: "xiadele_\u7EC433"
+    400232: "xiadele_\u7EC434"
+    400234: "xiadele_\u7EC435"
+    400236: "xiadele_\u7EC436"
+    400238: "xiadele_\u7EC437"
+    400240: "xiadele_\u7EC438"
+    400242: "xiadele_\u7EC439"
+    400244: "xiadele_\u7EC440"
+    400246: "xiadele_\u7EC441"
+    400248: "xiadele_\u7EC442"
+    400250: "xiadele_\u7EC443"
+    400252: "xiadele_\u7EC444"
+    400254: "xiadele_\u7EC445"
+    400256: "xiadele_\u7EC446"
+    400258: "xiadele_\u7EC447"
+    400260: "xiadele_\u7EC448"
+    400262: "xiadele_\u7EC449"
+    400264: "xiadele_\u7EC450"
+    2000000: xiadele_Camera01
+    2300000: xiadele_Box01
+    2300002: xiadele_Box01 1
+    2300004: xiadele_Box02
+    2300006: xiadele_Box02 1
+    2300008: xiadele_Box02 2
+    2300010: xiadele_Box03
+    2300012: xiadele_Box04
+    2300014: xiadele_Box05
+    2300016: xiadele_ChamferBox03
+    2300018: xiadele_ChamferBox10
+    2300020: xiadele_ChamferBox11
+    2300022: xiadele_ChamferBox12
+    2300024: xiadele_ChamferBox18
+    2300026: xiadele_ChamferBox19
+    2300028: xiadele_ChamferBox20
+    2300030: xiadele_ChamferBox21
+    2300032: xiadele_ChamferBox22
+    2300034: xiadele_ChamferBox23
+    2300036: xiadele_ChamferBox24
+    2300038: xiadele_ChamferBox25
+    2300040: xiadele_ChamferBox26
+    2300042: xiadele_ChamferBox27
+    2300044: xiadele_ChamferBox28
+    2300046: xiadele_ChamferBox29
+    2300048: xiadele_ChamferBox30
+    2300050: xiadele_Circle01
+    2300052: xiadele_Circle02
+    2300054: xiadele_Circle03
+    2300056: xiadele_Circle04
+    2300058: xiadele_Circle05
+    2300060: xiadele_Circle06
+    2300062: xiadele_Circle07
+    2300064: xiadele_Circle08
+    2300066: xiadele_Circle09
+    2300068: xiadele_Circle10
+    2300070: xiadele_Circle11
+    2300072: xiadele_Circle12
+    2300074: xiadele_Circle13
+    2300076: xiadele_Line01
+    2300078: xiadele_Line01 1
+    2300080: xiadele_Line01 2
+    2300082: xiadele_Line02
+    2300084: xiadele_Line021
+    2300086: xiadele_Line03
+    2300088: xiadele_Line03 1
+    2300090: xiadele_Line04
+    2300092: xiadele_Line041
+    2300094: xiadele_Line05
+    2300096: xiadele_Line07
+    2300098: xiadele_Line08
+    2300100: xiadele_Line09
+    2300102: xiadele_Line10
+    2300104: xiadele_Line11
+    2300106: xiadele_Line12
+    2300108: xiadele_Line13
+    2300110: xiadele_Line14
+    2300112: xiadele_Line15
+    2300114: xiadele_Loft01
+    2300116: xiadele_Loft02
+    2300118: xiadele_Loft03
+    2300120: xiadele_obj31_022_obj_01
+    2300122: xiadele_Object01
+    2300124: xiadele_Object05
+    2300126: xiadele_Object06
+    2300128: xiadele_Object07
+    2300130: xiadele_Object08
+    2300132: xiadele_Object09
+    2300134: xiadele_Rectangle01
+    2300136: xiadele_Rectangle01 1
+    2300138: xiadele_Rectangle02
+    2300140: xiadele_Rectangle03
+    2300142: xiadele_Rectangle04
+    2300144: xiadele_Rectangle05
+    2300146: xiadele_Rectangle06
+    2300148: xiadele_Rectangle07
+    2300150: xiadele_Sphere01
+    2300152: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430 1"
+    2300154: "xiadele_\u041E\u0442\u0440\u0430\u0436\u0430\u0442\u0435\u043B\u044C"
+    2300156: "xiadele_\u5BF9\u8C6101"
+    2300158: "xiadele_\u5BF9\u8C6102"
+    3300000: xiadele_Box01
+    3300002: xiadele_Box01 1
+    3300004: xiadele_Box02
+    3300006: xiadele_Box02 1
+    3300008: xiadele_Box02 2
+    3300010: xiadele_Box03
+    3300012: xiadele_Box04
+    3300014: xiadele_Box05
+    3300016: xiadele_ChamferBox03
+    3300018: xiadele_ChamferBox10
+    3300020: xiadele_ChamferBox11
+    3300022: xiadele_ChamferBox12
+    3300024: xiadele_ChamferBox18
+    3300026: xiadele_ChamferBox19
+    3300028: xiadele_ChamferBox20
+    3300030: xiadele_ChamferBox21
+    3300032: xiadele_ChamferBox22
+    3300034: xiadele_ChamferBox23
+    3300036: xiadele_ChamferBox24
+    3300038: xiadele_ChamferBox25
+    3300040: xiadele_ChamferBox26
+    3300042: xiadele_ChamferBox27
+    3300044: xiadele_ChamferBox28
+    3300046: xiadele_ChamferBox29
+    3300048: xiadele_ChamferBox30
+    3300050: xiadele_Circle01
+    3300052: xiadele_Circle02
+    3300054: xiadele_Circle03
+    3300056: xiadele_Circle04
+    3300058: xiadele_Circle05
+    3300060: xiadele_Circle06
+    3300062: xiadele_Circle07
+    3300064: xiadele_Circle08
+    3300066: xiadele_Circle09
+    3300068: xiadele_Circle10
+    3300070: xiadele_Circle11
+    3300072: xiadele_Circle12
+    3300074: xiadele_Circle13
+    3300076: xiadele_Line01
+    3300078: xiadele_Line01 1
+    3300080: xiadele_Line01 2
+    3300082: xiadele_Line02
+    3300084: xiadele_Line021
+    3300086: xiadele_Line03
+    3300088: xiadele_Line03 1
+    3300090: xiadele_Line04
+    3300092: xiadele_Line041
+    3300094: xiadele_Line05
+    3300096: xiadele_Line07
+    3300098: xiadele_Line08
+    3300100: xiadele_Line09
+    3300102: xiadele_Line10
+    3300104: xiadele_Line11
+    3300106: xiadele_Line12
+    3300108: xiadele_Line13
+    3300110: xiadele_Line14
+    3300112: xiadele_Line15
+    3300114: xiadele_Loft01
+    3300116: xiadele_Loft02
+    3300118: xiadele_Loft03
+    3300120: xiadele_obj31_022_obj_01
+    3300122: xiadele_Object01
+    3300124: xiadele_Object05
+    3300126: xiadele_Object06
+    3300128: xiadele_Object07
+    3300130: xiadele_Object08
+    3300132: xiadele_Object09
+    3300134: xiadele_Rectangle01
+    3300136: xiadele_Rectangle01 1
+    3300138: xiadele_Rectangle02
+    3300140: xiadele_Rectangle03
+    3300142: xiadele_Rectangle04
+    3300144: xiadele_Rectangle05
+    3300146: xiadele_Rectangle06
+    3300148: xiadele_Rectangle07
+    3300150: xiadele_Sphere01
+    3300152: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430 1"
+    3300154: "xiadele_\u041E\u0442\u0440\u0430\u0436\u0430\u0442\u0435\u043B\u044C"
+    3300156: "xiadele_\u5BF9\u8C6101"
+    3300158: "xiadele_\u5BF9\u8C6102"
+    4300000: xiadele_Rectangle01
+    4300002: xiadele_Rectangle03
+    4300004: xiadele_Line04
+    4300006: xiadele_Rectangle04
+    4300008: xiadele_Rectangle05
+    4300010: xiadele_Line03
+    4300012: xiadele_Line02
+    4300014: xiadele_Line01
+    4300016: xiadele_Rectangle02
+    4300018: "xiadele_\u0412\u0441\u043F\u044B\u0448\u043A\u0430"
+    4300020: "xiadele_\u041E\u0442\u0440\u0430\u0436\u0430\u0442\u0435\u043B\u044C"
+    4300022: xiadele_Box05
+    4300024: xiadele_Box04
+    4300026: xiadele_Box03
+    4300028: xiadele_Box01
+    4300030: xiadele_Box02
+    4300032: xiadele_Rectangle01
+    4300034: xiadele_ChamferBox11
+    4300036: xiadele_Line07
+    4300038: xiadele_ChamferBox12
+    4300040: xiadele_ChamferBox18
+    4300042: xiadele_ChamferBox10
+    4300044: xiadele_Line09
+    4300046: xiadele_Line10
+    4300048: xiadele_Rectangle06
+    4300050: "xiadele_\u5BF9\u8C6102"
+    4300052: xiadele_Loft01
+    4300054: xiadele_Loft02
+    4300056: xiadele_obj31_022_obj_01
+    4300058: "xiadele_\u5BF9\u8C6101"
+    4300060: xiadele_Line05
+    4300062: xiadele_Line15
+    4300064: xiadele_Rectangle07
+    4300066: xiadele_Object06
+    4300068: xiadele_Object07
+    4300070: xiadele_Sphere01
+    4300072: xiadele_Object01
+    4300074: xiadele_Object05
+    4300076: xiadele_Line01
+    4300078: xiadele_Box01
+    4300080: xiadele_Box02
+    4300082: xiadele_Object08
+    4300084: xiadele_Object09
+    4300086: xiadele_Box02
+    4300088: xiadele_Line041
+    4300090: xiadele_Line03
+    4300092: xiadele_Line01
+    4300094: xiadele_Circle02
+    4300096: xiadele_Line021
+    4300098: xiadele_Loft03
+    4300100: xiadele_ChamferBox03
+    4300102: xiadele_Circle03
+    4300104: xiadele_Circle01
+    10800000: xiadele_PhotometricLight01
+    10800002: xiadele_PhotometricLight02
+    10800004: xiadele_PhotometricLight03
+    10800006: xiadele_PhotometricLight04
+    10800008: xiadele_PhotometricLight05
+    10800010: xiadele_PhotometricLight06
+    10800012: xiadele_PhotometricLight07
+    10800014: xiadele_TPhotometricLight01
+    10800016: xiadele_TPhotometricLight02
+    10800018: xiadele_TPhotometricLight03
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// pico手柄
-/// </summary>
 public class MyController : MonoBehaviour
 {
     RaycastHit raycastHit;
