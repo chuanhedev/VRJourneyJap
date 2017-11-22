@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// pico手柄
 /// </summary>
-public class PicoController : MonoBehaviour
+public class MyController : MonoBehaviour
 {
     RaycastHit raycastHit;
     Transform controller;
@@ -17,22 +17,35 @@ public class PicoController : MonoBehaviour
 
     void Awake()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         Find();
+#endif
     }
 
     void Update()
     {
+#if UNITY_ANDROID && !UNITY_EDITOR
         Ray ray = new Ray(controller.position, (dot.position - controller.position).normalized);
-        bool isEnter = Physics.Raycast(ray, out raycastHit, 30);
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR
+        Ray ray = new Ray(transform.position, transform.forward);
+#endif
+
+        bool isEnter = Physics.Raycast(ray, out raycastHit, 50);
         if (isEnter)
         {
             OptionUI optionUI = raycastHit.transform.GetComponent<OptionUI>();
-            dot.position = raycastHit.point;
+            if (dot) dot.position = raycastHit.point;
             if (optionUI)
             {
                 if (!optionUIList.Contains(optionUI)) optionUIList.Add(optionUI);
                 CheckOptionUIs(optionUI, false);
+
+#if UNITY_ANDROID && !UNITY_EDITOR
                 if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD)) optionUI.OnClick();
+#elif UNITY_STANDALONE_WIN || UNITY_EDITOR
+                if (Input.GetMouseButtonUp(0)) optionUI.OnClick();
+#endif
+
             }
             else
             {
@@ -42,7 +55,7 @@ public class PicoController : MonoBehaviour
         else
         {
             CheckOptionUIs(null, true);
-            dot.position = controller.position + direction.forward * 3;
+            if (dot) dot.position = controller.position + direction.forward * 3;
         }
     }
 

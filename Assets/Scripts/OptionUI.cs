@@ -13,6 +13,7 @@ public class OptionUI : MonoBehaviour
     RefreshPanoData refreshPanoData;
     Image optionImage;
     Color defColor;
+    Transform label;
 
     void Awake()
     {
@@ -22,19 +23,34 @@ public class OptionUI : MonoBehaviour
 
     public void OnExit()
     {
-        optionImage.color = defColor;
+        Debug.Log("OnExit");
+
+        if (optionImage) optionImage.color = defColor;
+
+        if (label) label.gameObject.SetActive(false);
     }
 
     public void OnEnter()
     {
-        optionImage.color = new Color(defColor.r, defColor.b, defColor.g, defColor.a + 0.25f);
+        Debug.Log("OnEnter");
+
+        if (optionImage) optionImage.color = new Color(defColor.r, defColor.b, defColor.g, defColor.a + 0.25f);
+
+        if (label && !label.gameObject.activeSelf) label.gameObject.SetActive(true);
     }
 
     public void OnClick()
     {
+        Debug.Log("OnClick");
+
         if (interactiveItem) interactiveItem.Click();
 
         if (refreshPanoData) refreshPanoData.Click();
+
+        if (label)
+        {
+            FacadeManager._instance.RequestUpdatePano(label.GetComponent<Label>().goPanoScene);
+        }
     }
 
     void Find()
@@ -42,10 +58,11 @@ public class OptionUI : MonoBehaviour
         optionImage = GetComponent<Image>();
         interactiveItem = GetComponent<VitoVRInteractiveItem>();
         refreshPanoData = GetComponent<RefreshPanoData>();
+        label = transform.Find("Label");
     }
 
     void Init()
     {
-        defColor = optionImage.color;
+        if (optionImage) defColor = optionImage.color;
     }
 }

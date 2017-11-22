@@ -13,14 +13,45 @@ public class FacadeManager : MonoBehaviour
     MyUIManager myUIManager;
     UpdatePanoTextures updatePanoTextures;
     UpdatePanoBlack updatePanoBlack;
+    UpdatePanoLabel updatePanoLabel;
     Action<string> LoadCallback;
-    Image black;
+    public static Action<string> Act_UpdatePano;
+    [SerializeField] GameObject panoBlack;
+    GameObject panoBlackGo;
+    [SerializeField] GameObject pano_Label;
+    GameObject pano_LabelGo;
 
     void Awake()
     {
         _instance = this;
         InitManagers();
         LoadCallback += OnLoadCallback;
+
+        RegisterUpdatePano();
+     
+    }
+
+    void OnEnable()
+    {
+        Act_UpdatePano += UpdatePano;
+    }
+    void OnDisable()
+    {
+        Act_UpdatePano -= UpdatePano;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+
+            RequestUpdatePano("Osaka/Park");
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            RequestUpdatePano("Osaka/Loft");
+        }
     }
 
     /// <summary>
@@ -52,10 +83,63 @@ public class FacadeManager : MonoBehaviour
         updatePanoTextures.UpdatePano(panoPath);
     }
 
+    public void UpdateLabel(string panoPath)
+    {
+        if (!pano_LabelGo)
+        {
+            pano_LabelGo = Instantiate(pano_Label);
+        }
+
+        updatePanoLabel.UpdateLabel(pano_LabelGo, panoPath);
+    }
+
+    /// <summary>
+    /// 执行同步切换pano
+    /// </summary>
+    /// <param name="panoPath"></param>
+    public void RequestUpdatePano(string panoPath)
+    {
+        Rpc_UpdatePano(panoPath);
+    }
+
+    #region 切换pano
     public void UpdatePano(string panoPath)
     {
-        updatePanoBlack.UpdatePano(black, panoPath);
+        if (panoBlackGo) return;
+        panoBlackGo = Instantiate(panoBlack);
+        LivePano_SceneTransition livePano_SceneTransition = panoBlackGo.GetComponent<LivePano_SceneTransition>();
+        updatePanoBlack.UpdatePano(livePano_SceneTransition, panoPath);
     }
+
+
+    void Rpc_UpdatePano(string msg)
+    {
+        if (!VitoPlugin.IsNetMode)
+        {
+            Cmd_UpdatePano(msg);
+        }
+        else
+        {
+            VitoPlugin.RequestActionEvent("UpdatePano", msg);
+        }
+    }
+
+    void Cmd_UpdatePano(string msg)
+    {
+        if (Act_UpdatePano != null)
+        {
+            Act_UpdatePano(msg);
+        }
+    }
+
+    void RegisterUpdatePano()
+    {
+        VitoPlugin.RegisterActionEvent("UpdatePano", (string actionName, string parameter, string deviceid) =>
+        {
+            Cmd_UpdatePano(parameter);
+        });
+    }
+    #endregion
 
     void InitManagers()
     {
@@ -63,5 +147,6 @@ public class FacadeManager : MonoBehaviour
         myUIManager = new MyUIManager();
         updatePanoTextures = new UpdatePanoTextures(this);
         updatePanoBlack = new UpdatePanoBlack(this);
+        updatePanoLabel = new UpdatePanoLabel();
     }
 }
