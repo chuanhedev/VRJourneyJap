@@ -11,12 +11,16 @@ public class MyController : MonoBehaviour
     Transform dot;
     Transform direction;
     List<OptionUI> optionUIList = new List<OptionUI>();
+    LayerMask layerMask;
 
     void Awake()
     {
+
 #if UNITY_ANDROID && !UNITY_EDITOR
         Find();
 #endif
+
+        Init();
     }
 
     void Update()
@@ -27,7 +31,7 @@ public class MyController : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
 #endif
 
-        bool isEnter = Physics.Raycast(ray, out raycastHit, 50);
+        bool isEnter = Physics.Raycast(ray, out raycastHit, 50, layerMask);
         if (isEnter)
         {
             OptionUI optionUI = raycastHit.transform.GetComponent<OptionUI>();
@@ -89,5 +93,10 @@ public class MyController : MonoBehaviour
         controller = transform.Find("controller/ppcontroller");
         dot = transform.Find("dot");
         direction = transform.Find("direction");
+    }
+
+    void Init()
+    {
+        layerMask = (1 << LayerMask.NameToLayer("OptionUI")) | (1 << LayerMask.NameToLayer("GrabObject"));
     }
 }

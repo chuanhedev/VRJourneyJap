@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -43,7 +44,13 @@ public class OptionUI : MonoBehaviour
     {
         Debug.Log("OnClick");
 
-        if (interactiveItem) interactiveItem.Click();
+        if (interactiveItem)
+        {
+            if (SceneManager.GetActiveScene().name != "JapEatery")
+                MicController.instance.enabled = true;
+
+            interactiveItem.Click();
+        }
 
         if (refreshPanoData) refreshPanoData.Click();
 
@@ -64,5 +71,7 @@ public class OptionUI : MonoBehaviour
     void Init()
     {
         if (optionImage) defColor = optionImage.color;
+
+        gameObject.layer = LayerMask.NameToLayer("OptionUI");
     }
 }

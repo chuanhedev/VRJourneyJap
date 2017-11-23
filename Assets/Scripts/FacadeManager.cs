@@ -2,11 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+public enum Mode
+{
+    Controller,
+    Leap
+}
+
 
 public class FacadeManager : MonoBehaviour
 {
     public static FacadeManager _instance;
+    public Mode mode = Mode.Controller;
     [SerializeField] GameObject menu;
     public Material[] panoMats;
     RefreshPanoManager refreshPanoManager;
@@ -20,6 +29,8 @@ public class FacadeManager : MonoBehaviour
     GameObject panoBlackGo;
     [SerializeField] GameObject pano_Label;
     GameObject pano_LabelGo;
+    GameObject leap;
+    GameObject japEatery;
 
     void Awake()
     {
@@ -42,16 +53,17 @@ public class FacadeManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
+        //if (Input.GetKeyDown(KeyCode.A))
+        //{
 
-            RequestUpdatePano("Osaka/Park");
-        }
+        //    // RequestUpdatePano("Osaka/Park");
+        //    SwitchPicoHome();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            RequestUpdatePano("Osaka/Loft");
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    // RequestUpdatePano("Osaka/Loft");
+        //}
     }
 
     public T AddOrDestoryComponment<T>(GameObject go, bool isAdd) where T : Component
@@ -87,9 +99,44 @@ public class FacadeManager : MonoBehaviour
     ///点击pico手柄home键时调用
     /// </summary>
     /// <param name="isShow"></param>
-    public void SwitchPicoMenu()
+    public void SwitchPicoHome(bool isInitMode)
     {
         //myUIManager.CheckPicoMenu(menu);
+
+        if (VitoSDKConfig.instance.ctrlType == CtrlType.Admin) return;
+
+        if (SceneManager.GetActiveScene().name == "JapEatery")
+        {
+            //切换leap
+            if (!leap)
+            {
+                GameObject mainCameraGo = GameObject.FindGameObjectWithTag("MainCamera");
+                if (mainCameraGo)
+                {
+                    leap = mainCameraGo.transform.Find("LMHeadMountedRig").gameObject;
+                }
+                else
+                {
+                    leap = GameObject.FindGameObjectWithTag("LeapMotion");
+                }
+            }
+
+            if (!japEatery)
+                japEatery = GameObject.FindGameObjectWithTag("JapEatery");
+
+            if (leap.activeSelf || isInitMode)//手柄模式
+            {
+                mode = Mode.Controller;
+                leap.SetActive(false);
+                japEatery.transform.position = new Vector3(0.2f, 1.2f, -3.91f);
+            }
+            else//leap模式
+            {
+                mode = Mode.Leap;
+                leap.SetActive(true);
+                japEatery.transform.position = new Vector3(0.2f, 2.2f, -3.91f);
+            }
+        }
     }
 
     public void LoadPano(string panoPath)

@@ -503,7 +503,7 @@ public class Pvr_ControllerManager : MonoBehaviour
                 {
                     //controllerlink.RebackToLauncher();
                     //显示菜单
-                    FacadeManager._instance.SwitchPicoMenu();
+                    FacadeManager._instance.SwitchPicoHome(false);
                 }
                 if (!longPressclock && Controller.UPvr_GetKeyUp(Pvr_KeyCode.VOLUMEUP))
                 {

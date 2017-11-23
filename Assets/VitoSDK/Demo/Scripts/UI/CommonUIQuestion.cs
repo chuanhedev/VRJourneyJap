@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
-public class CommonUIQuestion : MonoBehaviour {
+using UnityEngine.SceneManagement;
+
+public class CommonUIQuestion : MonoBehaviour
+{
     public static CommonUIQuestion instance { get; set; }
 
     public Text txtContent;
@@ -53,7 +56,7 @@ public class CommonUIQuestion : MonoBehaviour {
     }
     void SelectD()
     {
-        
+
         Answer(4);
     }
 
@@ -68,13 +71,14 @@ public class CommonUIQuestion : MonoBehaviour {
             return;
         }
         VitoPluginQuestionManager.instance.CheckAnswer(index);
-        if(index==rightOptionIndex)
+        if (index == rightOptionIndex)
         {
             SetColor(Color.green);
-        }else
+        }
+        else
         {
             SetColor(Color.red);
-            switch(rightOptionIndex)
+            switch (rightOptionIndex)
             {
                 case 1:
                     optionA.color = Color.green;
@@ -97,16 +101,18 @@ public class CommonUIQuestion : MonoBehaviour {
     {
         txtContent.color = color;
         txtTitle.color = color;
-        optionA.color=color;
-        optionB.color=color;
+        optionA.color = color;
+        optionB.color = color;
         optionC.color = color;
-        optionD.color=color;
+        optionD.color = color;
     }
 
     void Hide()
     {
         SetColor(Color.white);
         centerObject.SetActive(false);
+        if (SceneManager.GetActiveScene().name != "JapEatery")
+            MicController.instance.enabled = true;
     }
     void Awake()
     {
@@ -122,17 +128,18 @@ public class CommonUIQuestion : MonoBehaviour {
         VitoPluginQuestionManager.instance.OnShowQuestion -= Init;
     }
 
-	public void Init(JsonData jd)
+    public void Init(JsonData jd)
     {
         UI3DFollowCamera.instance.ResetPos();
         centerObject.SetActive(true);
+        MicController.instance.enabled = false;
         txtTitle.text = jd["title"].ToString();
         txtContent.text = jd["content"].ToString();
         optionA.text = jd["option1"].ToString();
         optionB.text = jd["option2"].ToString();
         optionC.text = jd["option3"].ToString();
         optionD.text = jd["option4"].ToString();
-        rightOptionIndex = System.Int32.Parse(  jd["rightOption"].ToString());
+        rightOptionIndex = System.Int32.Parse(jd["rightOption"].ToString());
     }
 
 
