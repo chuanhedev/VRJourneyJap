@@ -28,6 +28,8 @@ public class MicController : MonoBehaviour {
         micRecorder = GetComponent<MicRecorder> ();
 		content = transform.GetChild (0).gameObject;
 		SetState (MicControllerState.Idle);
+
+        userName = VitoPlugin.UserId.ToString();
 	}
 
 	public string userName{

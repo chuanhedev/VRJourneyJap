@@ -142,6 +142,4 @@ public class CommonUIQuestion : MonoBehaviour
         rightOptionIndex = System.Int32.Parse(jd["rightOption"].ToString());
     }
 
-
-
 }

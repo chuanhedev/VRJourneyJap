@@ -11,12 +11,11 @@ public enum Mode
     Leap
 }
 
-
 public class FacadeManager : MonoBehaviour
 {
     public static FacadeManager _instance;
-    public Mode mode = Mode.Controller;
-    [SerializeField] GameObject menu;
+    [HideInInspector] public Mode mode = Mode.Controller;
+    //[SerializeField] GameObject menu;
     public Material[] panoMats;
     RefreshPanoManager refreshPanoManager;
     MyUIManager myUIManager;
@@ -51,20 +50,19 @@ public class FacadeManager : MonoBehaviour
         Act_UpdatePano -= UpdatePano;
     }
 
-    void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
 
-        //    // RequestUpdatePano("Osaka/Park");
-        //    SwitchPicoHome();
-        //}
+    //        SwitchPicoHome(false);
+    //    }
 
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    // RequestUpdatePano("Osaka/Loft");
-        //}
-    }
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //    {
+    //        RequestUpdatePano("Osaka/Loft");
+    //    }
+    //}
 
     public T AddOrDestoryComponment<T>(GameObject go, bool isAdd) where T : Component
     {
@@ -128,14 +126,15 @@ public class FacadeManager : MonoBehaviour
             {
                 mode = Mode.Controller;
                 leap.SetActive(false);
-                japEatery.transform.position = new Vector3(0.2f, 1.2f, -3.91f);
+                japEatery.transform.position = new Vector3(0.2f, 1.88f, -2.98f);
             }
             else//leap模式
             {
                 mode = Mode.Leap;
                 leap.SetActive(true);
-                japEatery.transform.position = new Vector3(0.2f, 2.2f, -3.91f);
+                japEatery.transform.position = new Vector3(0.2f, 2.3f, -4.04f);
             }
+            GrabObjectManager._instance.ResetAllGrabObject();
         }
     }
 

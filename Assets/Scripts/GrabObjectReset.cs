@@ -4,20 +4,15 @@ using UnityEngine;
 
 public class GrabObjectReset : MonoBehaviour
 {
-    bool isResetting;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         Transform grabObjectTrans = other.transform;
         GrabObjectState grabObjectState = grabObjectTrans.GetComponent<GrabObjectState>();
         if (grabObjectTrans.gameObject.layer != LayerMask.NameToLayer("GrabObject")) return;
 
         // Debug.Log("OnTriggerEnter");
-
-        if (isResetting) return;
-
-        isResetting = true;
-        StopAllCoroutines();
+      
         StartCoroutine(DoReset(grabObjectState));
     }
 
@@ -25,8 +20,6 @@ public class GrabObjectReset : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        grabObjectState.transform.position = grabObjectState.DefPos;
-        grabObjectState.transform.rotation = grabObjectState.DefRotate;
-        isResetting = false;
+        grabObjectState.ResetObject();
     }
 }

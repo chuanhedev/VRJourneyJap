@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PicoGrab : MonoBehaviour
 {
+    public static PicoGrab _instance;
     RaycastHit raycastHit;
     RaycastHit groundRaycastHit;
     Transform controller;
@@ -16,8 +17,22 @@ public class PicoGrab : MonoBehaviour
     float grabDis;
     LayerMask groundLayer;
 
+    public bool IsGrab
+    {
+        get
+        {
+            return isGrab;
+        }
+
+        set
+        {
+            isGrab = value;
+        }
+    }
+
     void Awake()
     {
+        _instance = this;
         Find();
         Init();
     }
@@ -89,7 +104,7 @@ public class PicoGrab : MonoBehaviour
 
             if (isGround)
             {
-                grabRigid.position = groundRaycastHit.point + groundRaycastHit.normal * 0.12f;
+                grabRigid.position = groundRaycastHit.point + groundRaycastHit.normal * 0.06f;
             }
             else
             {
