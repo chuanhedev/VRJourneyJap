@@ -1,9 +1,13 @@
 fileFormatVersion: 2
 guid: f9b456b25de0d944a966870c73974b33
-timeCreated: 1511528862
+timeCreated: 1511613501
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: "\u5E95\u56FE 1_0"
+    21300002: "\u5E95\u56FE 1_1"
+    21300004: "\u5E95\u56FE 1_2"
+    21300006: "\u5E95\u56FE 1_3"
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -39,7 +43,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 46, y: 49, z: 46, w: 48}
   spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -76,8 +80,80 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
-    outline: []
+    sprites:
+    - serializedVersion: 2
+      name: "\u5E95\u56FE 1_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 366.5
+        width: 320
+        height: 366.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -160, y: 183.25}
+        - {x: -160, y: -183}
+        - {x: 160, y: -183}
+        - {x: 160, y: 183.25}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u5E95\u56FE 1_1"
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 69
+        width: 526
+        height: 615
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -263, y: 307.5}
+        - {x: -263, y: -307.5}
+        - {x: 263, y: -307.5}
+        - {x: 263, y: 307.5}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u5E95\u56FE 1_2"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.5
+        width: 320
+        height: 366.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -160, y: 183.25}
+        - {x: -160, y: -183}
+        - {x: 160, y: -183}
+        - {x: 160, y: 183.25}
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: "\u5E95\u56FE 1_3"
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0.5
+        width: 320
+        height: 366.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -160, y: 183.25}
+        - {x: -160, y: -183}
+        - {x: 160, y: -183}
+        - {x: 160, y: 183.25}
+      tessellationDetail: 0
+    outline:
+    - - {x: -320, y: 366.5}
+      - {x: -320, y: -366.5}
+      - {x: 320, y: -366.5}
+      - {x: 320, y: 366.5}
   spritePackingTag: 
   userData: 
   assetBundleName: 
