@@ -67,8 +67,8 @@ public class HostUISceneItem : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public  void OnPointerExit(PointerEventData eventData)
     {
-        txtTitle.color = Color.white;
-        txtIntro.color = Color.white;
+        txtTitle.color = Color.black;
+        txtIntro.color = Color.black;
         imgLeftBorder.enabled = false;
         for (int i = 0; i < mTags.Count; i++)
         {

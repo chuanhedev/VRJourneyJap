@@ -9,7 +9,8 @@ using UnityEngine.UI;
 using System.IO;
 using System.Text;
 using com.vito.plugin.demo;
-public class HostUIManager : MonoBehaviour {
+public class HostUIManager : MonoBehaviour
+{
 
     public GameObject mHostUIRoot;
 
@@ -105,19 +106,20 @@ public class HostUIManager : MonoBehaviour {
 
     public void SetLookedInfo(UnitInfo lookedInfo)
     {
-        if(lookedInfo==null)
+        if (lookedInfo == null)
         {
             txtLookedInfo.text = "";
-        }else
+        }
+        else
         {
-            UserInfoData data= UserInfoManager.instance.GetUserInfoWithUserId(lookedInfo.UnitID);
-            if(data!=null)
+            UserInfoData data = UserInfoManager.instance.GetUserInfoWithUserId(lookedInfo.UnitID);
+            if (data != null)
             {
-                if(!string.IsNullOrEmpty(data.name))
+                if (!string.IsNullOrEmpty(data.name))
                 {
                     txtLookedInfo.text = "正在观察：" + data.name;
                 }
-                else if(!string.IsNullOrEmpty(data.number))
+                else if (!string.IsNullOrEmpty(data.number))
                 {
                     txtLookedInfo.text = "正在观察：" + data.number;
                 }
@@ -125,22 +127,23 @@ public class HostUIManager : MonoBehaviour {
                 {
                     txtLookedInfo.text = "正在观察：" + data.userid;
                 }
-                
-            }else
+
+            }
+            else
             {
                 txtLookedInfo.text = "正在观察：" + lookedInfo.UnitID;
             }
-            
+
         }
     }
 
     public void CreatePlayerRay(UnitInfo targetUnitInfo, UnitInfo lookUnitInfo)
     {
-        
+
     }
     public void SetTitle(string name)
     {
-        txtTitle.text = "当前场景:"+name;
+        txtTitle.text = "当前场景:" + name;
     }
 
     public static HostUIManager instance;
@@ -151,15 +154,16 @@ public class HostUIManager : MonoBehaviour {
 
     IEnumerator Start()
     {
-        while(!VitoSDKConfig.instance.IsConfigLoadOver)
+        while (!VitoSDKConfig.instance.IsConfigLoadOver)
         {
             yield return null;
         }
 
-        if(VitoPlugin.CT==CtrlType.Admin)
+        if (VitoPlugin.CT == CtrlType.Admin)
         {
             mHostUIRoot.SetActive(true);
-        }else
+        }
+        else
         {
             mHostUIRoot.SetActive(false);
         }
@@ -168,7 +172,7 @@ public class HostUIManager : MonoBehaviour {
     }
     void ShowVideoList()
     {
-        if (VitoSDKConfig.instance.videoConfigList!=null)
+        if (VitoSDKConfig.instance.videoConfigList != null)
         {
             for (int i = 0; i < VitoSDKConfig.instance.videoConfigList.Count; i++)
             {
@@ -180,13 +184,14 @@ public class HostUIManager : MonoBehaviour {
                 go.transform.localPosition = pos;
                 go.transform.localScale = Vector3.one;
                 go.GetComponent<HostUISceneItem>().Init(data);
-                
+
                 NetItem ni = new NetItem();
                 ni.url = data.iconPath;
-                if(ni.url.StartsWith("http"))
+                if (ni.url.StartsWith("http"))
                 {
 
-                }else
+                }
+                else
                 {
                     ni.url = "file:///" + ni.url;
                 }
@@ -204,7 +209,7 @@ public class HostUIManager : MonoBehaviour {
         ssi.imgIcon.texture = www.tex;
     }
 
-    private void InvokeMethod(string name,object[] parameter=null)
+    private void InvokeMethod(string name, object[] parameter = null)
     {
 
         Type type = typeof(HostUIManager);
@@ -217,7 +222,7 @@ public class HostUIManager : MonoBehaviour {
         }
         else
         {
-            #if !UNITY_ANDROID
+#if !UNITY_ANDROID
             DebugHealper.Log("HostUIManager." + name + " isNotExist");
 #endif
         }
@@ -241,11 +246,12 @@ public class HostUIManager : MonoBehaviour {
     }
     public void OnResponsePause(bool isStart)
     {
-        if(isStart)
+        if (isStart)
         {
             mPauseToggle.SetToggleValue(false);
             mStartToggle.SetToggleValue(true);
-        }else
+        }
+        else
         {
             mPauseToggle.SetToggleValue(true);
             mPauseToggle.SetToggleValue(false);
@@ -266,24 +272,25 @@ public class HostUIManager : MonoBehaviour {
 
     public void OnChangeScene(string sceneName)
     {
-        if( Application.CanStreamedLevelBeLoaded(sceneName))
+        if (Application.CanStreamedLevelBeLoaded(sceneName))
         {
             VitoPluginLoadScene.instance.OnRequestChangeScene(sceneName);
             mHostUISceneItemParent.parent.parent.parent.gameObject.SetActive(false);
-        }else
+        }
+        else
         {
-            #if !UNITY_ANDROID
+#if !UNITY_ANDROID
             DebugHealper.Log("the scene : " + sceneName + " is not exist ");
 #endif
         }
     }
 
 
-    public void OnToggleValueChange(string toggleName,bool value)
+    public void OnToggleValueChange(string toggleName, bool value)
     {
-        InvokeMethod(toggleName,new object[] { value});
+        InvokeMethod(toggleName, new object[] { value });
     }
-    
+
     public void OnBtnClick(string btnName)
     {
         InvokeMethod(btnName);
@@ -296,14 +303,14 @@ public class HostUIManager : MonoBehaviour {
     }
     private void CtrlModeToggle(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             HostActionController.instance.OnRequestAdminMode();
         }
     }
     private void PauseModeToggle(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             HostActionController.instance.OnRequestStopMsg();
         }
@@ -311,16 +318,17 @@ public class HostUIManager : MonoBehaviour {
 
     private void VirtualBodyVisiableToggle(bool isOn)
     {
-        
-        if(isOn)
+
+        if (isOn)
         {
             txtVisiableToggle.text = "形象开启";
-        }else
+        }
+        else
         {
             txtVisiableToggle.text = "形象关闭";
         }
-        
-        if(isOn!=ActionController.instance.virtualBodyVisiable)
+
+        if (isOn != ActionController.instance.virtualBodyVisiable)
         {
             HostActionController.instance.OnRequestVirtualBodyVisiable(isOn);
         }
@@ -328,17 +336,18 @@ public class HostUIManager : MonoBehaviour {
     }
     private void StartModeToggle(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             HostActionController.instance.OnRequestContinueMsg();
         }
     }
     private void SceneOptionToggle(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             sceneOptions.ShowOptions();
-        }else
+        }
+        else
         {
             sceneOptions.HideOptions();
         }
@@ -350,13 +359,13 @@ public class HostUIManager : MonoBehaviour {
     }
 
     void Update()
-    {        
-        if(Input.GetKeyDown(KeyCode.F1))
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            if(VitoPlugin.IsNetMode&& VitoPlugin.CT==CtrlType.Admin)
+            if (VitoPlugin.IsNetMode && VitoPlugin.CT == CtrlType.Admin)
             {
                 uiRoot.SetActive(!uiRoot.activeSelf);
-            }            
+            }
         }
     }
 
@@ -372,18 +381,19 @@ public class HostUIManager : MonoBehaviour {
 
     private void AudioToggle(bool isOn)
     {
-        if(isOn)
+        if (isOn)
         {
             txtVoiceToggle.text = "广播开启";
             HostActionController.instance.SendVoiceOpen();
-        }else
+        }
+        else
         {
-            txtVoiceToggle.text="广播关闭";
+            txtVoiceToggle.text = "广播关闭";
             HostActionController.instance.SendVoiceClose();
         }
     }
 
-    
+
 
 
 }

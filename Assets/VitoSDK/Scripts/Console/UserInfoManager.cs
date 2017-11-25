@@ -146,6 +146,9 @@ public class UserInfoManager : MonoBehaviour {
             HostUIManager.instance.OnUserRelogin(userInfoData);
         }
         TempRefreshUserStatusCount();
+
+        //同步模式
+        VitoModeController._instance.RequestChangeMode(Enum.GetName(typeof(VitoMode), FacadeManager._instance.vitoMode));
     }
 
     /// <summary>

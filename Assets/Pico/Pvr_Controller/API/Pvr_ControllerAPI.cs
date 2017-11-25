@@ -217,6 +217,8 @@ namespace Pvr_UnitySDKAPI
         /// </summary>
         public static bool UPvr_GetKey(Pvr_KeyCode key)
         {
+            if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return false;
+
             switch (key)
             {
                 case Pvr_KeyCode.APP:
@@ -238,6 +240,8 @@ namespace Pvr_UnitySDKAPI
         /// </summary>
         public static bool UPvr_GetKeyDown(Pvr_KeyCode key)
         {
+            if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return false;
+
             switch (key)
             {
                 case Pvr_KeyCode.APP:
@@ -259,6 +263,8 @@ namespace Pvr_UnitySDKAPI
         /// </summary>
         public static bool UPvr_GetKeyUp(Pvr_KeyCode key)
         {
+            if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return false;
+
             switch (key)
             {
                 case Pvr_KeyCode.APP:
@@ -280,6 +286,8 @@ namespace Pvr_UnitySDKAPI
         /// </summary>
         public static bool UPvr_GetKeyLongPressed(Pvr_KeyCode key)
         {
+            if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return false;
+
             switch (key)
             {
                 case Pvr_KeyCode.APP:

@@ -20,6 +20,7 @@ public class LeapGrab : MonoBehaviour
 
     void Update()
     {
+        if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return;
         if (handGrabController.Thumb == null) return;
 
         Vector3 organPos = handGrabController.Thumb.TipPosition.ToVector3() - handGrabController.Thumb.Direction.ToVector3() * 1;

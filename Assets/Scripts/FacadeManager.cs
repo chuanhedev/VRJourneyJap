@@ -11,10 +11,17 @@ public enum Mode
     Leap
 }
 
+public enum VitoMode
+{
+    Free,
+    Ctrl
+}
+
 public class FacadeManager : MonoBehaviour
 {
     public static FacadeManager _instance;
     [HideInInspector] public Mode mode = Mode.Controller;
+    [HideInInspector] public VitoMode vitoMode = VitoMode.Free;
     //[SerializeField] GameObject menu;
     public Material[] panoMats;
     RefreshPanoManager refreshPanoManager;
@@ -52,16 +59,18 @@ public class FacadeManager : MonoBehaviour
 
     //void Update()
     //{
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
+    //   // Debug.Log(vitoMode);
+    //    //Debug.Log(Enum.GetName(typeof(CtrlMode), VitoPlugin.CM));
+    //    //if (Input.GetKeyDown(KeyCode.A))
+    //    //{
 
-    //        SwitchPicoHome(false);
-    //    }
+    //    //    SwitchPicoHome(false);
+    //    //}
 
-    //    if (Input.GetKeyDown(KeyCode.S))
-    //    {
-    //        RequestUpdatePano("Osaka/Loft");
-    //    }
+    //    //if (Input.GetKeyDown(KeyCode.S))
+    //    //{
+    //    //    RequestUpdatePano("Osaka/Loft");
+    //    //}
     //}
 
     public T AddOrDestoryComponment<T>(GameObject go, bool isAdd) where T : Component
@@ -94,10 +103,10 @@ public class FacadeManager : MonoBehaviour
     }
 
     /// <summary>
-    ///点击pico手柄home键时调用
+    ///切换抓取模式
     /// </summary>
-    /// <param name="isShow"></param>
-    public void SwitchPicoHome(bool isInitMode)
+    /// <param name="isInitMode">是否重置到手柄模式</param>
+    public void SwitchPicoGrabMode(bool isInitMode)
     {
         //myUIManager.CheckPicoMenu(menu);
 
@@ -126,7 +135,7 @@ public class FacadeManager : MonoBehaviour
             {
                 mode = Mode.Controller;
                 leap.SetActive(false);
-                japEatery.transform.position = new Vector3(0.2f, 1.88f, -2.98f);
+                japEatery.transform.position = new Vector3(0.2f, 1.65f, -2.98f);
             }
             else//leap模式
             {

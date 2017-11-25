@@ -1,4 +1,5 @@
 ﻿using Pvr_UnitySDKAPI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class EaterHomeSetting : MonoBehaviour
     {
         MicController.instance.enabled = false;
         //Debug.Log("Start-----");
-        FacadeManager._instance.SwitchPicoHome(true);
+        FacadeManager._instance.SwitchPicoGrabMode(true);
     }
 
     void OnDestroy()
@@ -28,6 +29,9 @@ public class EaterHomeSetting : MonoBehaviour
 
     void Update()
     {
+
+        //MyPicoLog.SetLog1(Enum.GetName(typeof(CtrlMode), VitoPlugin.CM));
+
         if (PicoGrab._instance == null) return;
 
         if (PicoGrab._instance.IsGrab) return;
@@ -43,7 +47,7 @@ public class EaterHomeSetting : MonoBehaviour
 
             timer += Time.deltaTime;
 
-            if (timer >= 3)
+            if (timer >= 2)
             {
                 gradeController.ShowGrade();
                 timer = 0;

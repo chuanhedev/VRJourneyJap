@@ -501,9 +501,8 @@ public class Pvr_ControllerManager : MonoBehaviour
             {
                 if (!longPressclock && Controller.UPvr_GetKeyUp(Pvr_KeyCode.HOME) && !stopConnect)
                 {
-                    //controllerlink.RebackToLauncher();
-                    //显示菜单
-                    FacadeManager._instance.SwitchPicoHome(false);
+                    //controllerlink.RebackToLauncher(); 
+                    FacadeManager._instance.SwitchPicoGrabMode(false);
                 }
                 if (!longPressclock && Controller.UPvr_GetKeyUp(Pvr_KeyCode.VOLUMEUP))
                 {

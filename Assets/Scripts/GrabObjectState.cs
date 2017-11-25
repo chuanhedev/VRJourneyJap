@@ -45,6 +45,9 @@ public class GrabObjectState : MonoBehaviour
         // Debug.Log("SetTrigger-------");
     }
 
+    /// <summary>
+    /// 重置物体
+    /// </summary>
     public void ResetObject()
     {
         transform.rotation = parent.rotation;
