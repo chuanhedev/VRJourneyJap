@@ -29,8 +29,11 @@ public class HandGrabController : MonoBehaviour
 
         if (hand != null)
         {
-            float grabAngel = hand.PinchStrength;
-            if (grabAngel > 0.65f)
+            float grabPinchAngel = hand.PinchStrength;
+            float grabAngel = hand.GrabAngle;
+
+            Debug.Log(grabAngel);
+            if (grabPinchAngel > 0.65f || grabAngel > 1.5f)
             {
                 isGrab = true;
                 //Debug.Log(grabAngel + " " + hand.IsRight);
@@ -39,7 +42,6 @@ public class HandGrabController : MonoBehaviour
             {
                 isGrab = false;
             }
-
         }
     }
 

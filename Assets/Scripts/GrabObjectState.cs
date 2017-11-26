@@ -8,6 +8,15 @@ public class GrabObjectState : MonoBehaviour
     [HideInInspector] public ObjectGripState objectGripState = ObjectGripState.None;
     [SerializeField] Transform parent;
     Rigidbody _rigidbody;
+    public bool IsHandTrigger { get; set; }
+
+    public Transform Parent
+    {
+        get
+        {
+            return parent;
+        }
+    }
 
     void Awake()
     {
@@ -16,15 +25,32 @@ public class GrabObjectState : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (objectGripState != ObjectGripState.None) return;
-
         RigidHand rigidHand = other.transform.GetComponentInParent<RigidHand>();
-        if (!rigidHand) return;
+
+        if (rigidHand)
+        {
+            IsHandTrigger = true;
+        }
+        else
+        {
+            return;
+        }
+        if (objectGripState != ObjectGripState.None) return;
+        if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return;
 
         HandGrabController handGrabController = rigidHand.GetComponentInChildren<HandGrabController>();
         AddForceForHand(handGrabController.HandVelocity);
-
         //Debug.Log("AddForceForHand-------");
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        RigidHand rigidHand = other.transform.GetComponentInParent<RigidHand>();
+
+        if (rigidHand)
+        {
+            IsHandTrigger = false;
+        }
     }
 
     void AddForceForHand(Vector3 handVelocity)

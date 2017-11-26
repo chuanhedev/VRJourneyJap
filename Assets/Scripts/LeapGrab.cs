@@ -20,10 +20,15 @@ public class LeapGrab : MonoBehaviour
 
     void Update()
     {
-        if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return;
+        if (FacadeManager._instance.vitoMode == VitoMode.Ctrl)
+        {
+            DoRelease();
+            return;
+        }
+
         if (handGrabController.Thumb == null) return;
 
-        Vector3 organPos = handGrabController.Thumb.TipPosition.ToVector3() - handGrabController.Thumb.Direction.ToVector3() * 1;
+        Vector3 organPos = handGrabController.Thumb.TipPosition.ToVector3() - handGrabController.Thumb.Direction.ToVector3() * handGrabController.Thumb.Length;
 
         Ray ray = new Ray(organPos, handGrabController.Thumb.Direction.ToVector3());
 
@@ -44,36 +49,44 @@ public class LeapGrab : MonoBehaviour
         }
 
         //Debug.Log(handGrabController.IsGrab);
-
         if (!handGrabController.IsGrab)
         {
-            if (!fixedJoint.connectedBody) return;
-
-            //Debug.Log("释放-----");
-            GameObject connectedGo = fixedJoint.connectedBody.gameObject;
-            connectedGo.GetComponent<GrabObjectState>().objectGripState = ObjectGripState.None;
-            fixedJoint.connectedBody = null;
+            DoRelease();
         }
-
     }
 
     void DoGrab()
     {
         if (grabObjectState && handGrabController.IsGrab)
         {
-            if (handGrabController.Hand.IsRight)
+            if (grabObjectState.IsHandTrigger)
             {
-                grabObjectState.objectGripState = ObjectGripState.Right;
-            }
-            else
-            {
-                grabObjectState.objectGripState = ObjectGripState.Left;
-            }
+                if (handGrabController.Hand.IsRight)
+                {
+                    grabObjectState.objectGripState = ObjectGripState.Right;
+                }
+                else
+                {
+                    grabObjectState.objectGripState = ObjectGripState.Left;
+                }
 
-            // Debug.Log("DoGrab");
-            if (!fixedJoint.connectedBody)
-                fixedJoint.connectedBody = grabObjectState.GetComponent<Rigidbody>();
+                // Debug.Log("DoGrab");
+                if (!fixedJoint.connectedBody)
+                    fixedJoint.connectedBody = grabObjectState.GetComponent<Rigidbody>();
+
+            }
         }
+    }
+
+    void DoRelease()
+    {
+        if (!fixedJoint.connectedBody) return;
+
+        //Debug.Log("释放-----");
+        GameObject connectedGo = fixedJoint.connectedBody.gameObject;
+        connectedGo.GetComponent<GrabObjectState>().objectGripState = ObjectGripState.None;
+        fixedJoint.connectedBody = null;
+        grabObjectState.IsHandTrigger = false;
     }
 
     void Find()

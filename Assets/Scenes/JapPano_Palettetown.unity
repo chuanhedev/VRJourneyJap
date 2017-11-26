@@ -3802,7 +3802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 933ce113abab3ee4aa607dcd6b1eebdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstScene: Fukuoka/Sky
+  firstScene: Tokyo/Palettetown
 --- !u!4 &891235476
 Transform:
   m_ObjectHideFlags: 0

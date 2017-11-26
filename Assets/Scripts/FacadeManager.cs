@@ -20,8 +20,8 @@ public enum VitoMode
 public class FacadeManager : MonoBehaviour
 {
     public static FacadeManager _instance;
-    [HideInInspector] public Mode mode = Mode.Controller;
-    [HideInInspector] public VitoMode vitoMode = VitoMode.Free;
+    [HideInInspector] public Mode mode = Mode.Controller;//手柄和leap模式
+    [HideInInspector] public VitoMode vitoMode = VitoMode.Free;//自由和管理模式
     //[SerializeField] GameObject menu;
     public Material[] panoMats;
     RefreshPanoManager refreshPanoManager;
@@ -30,7 +30,7 @@ public class FacadeManager : MonoBehaviour
     UpdatePanoBlack updatePanoBlack;
     UpdatePanoLabel updatePanoLabel;
     Action<string> LoadCallback;
-    public static Action<string> Act_UpdatePano;
+    public static Action<string,bool> Act_UpdatePano;
     [SerializeField] GameObject panoBlack;
     GameObject panoBlackGo;
     [SerializeField] GameObject pano_Label;
@@ -45,7 +45,6 @@ public class FacadeManager : MonoBehaviour
         LoadCallback += OnLoadCallback;
 
         RegisterUpdatePano();
-
     }
 
     void OnEnable()
@@ -135,13 +134,13 @@ public class FacadeManager : MonoBehaviour
             {
                 mode = Mode.Controller;
                 leap.SetActive(false);
-                japEatery.transform.position = new Vector3(0.2f, 1.65f, -2.98f);
+                japEatery.transform.position = new Vector3(0.2f, 1.65f, -3.11f);
             }
             else//leap模式
             {
                 mode = Mode.Leap;
                 leap.SetActive(true);
-                japEatery.transform.position = new Vector3(0.2f, 2.3f, -4.04f);
+                japEatery.transform.position = new Vector3(0.2f, 2.26f, -3.97f);
             }
             GrabObjectManager._instance.ResetAllGrabObject();
         }
@@ -172,14 +171,20 @@ public class FacadeManager : MonoBehaviour
     }
 
     #region 切换pano
-    public void UpdatePano(string panoPath)
+    public void UpdatePano(string panoPath, bool isAwake)
     {
-        if (panoBlackGo) return;
-        panoBlackGo = Instantiate(panoBlack);
-        LivePano_SceneTransition livePano_SceneTransition = panoBlackGo.GetComponent<LivePano_SceneTransition>();
-        updatePanoBlack.UpdatePano(livePano_SceneTransition, panoPath);
+        if (isAwake)
+        {
+            updatePanoBlack.UpdatePano(panoPath);
+        }
+        else
+        {
+            if (panoBlackGo) return;
+            panoBlackGo = Instantiate(panoBlack);
+            LivePano_SceneTransition livePano_SceneTransition = panoBlackGo.GetComponent<LivePano_SceneTransition>();
+            updatePanoBlack.UpdatePano(livePano_SceneTransition, panoPath);
+        }
     }
-
 
     void Rpc_UpdatePano(string msg)
     {
@@ -197,7 +202,7 @@ public class FacadeManager : MonoBehaviour
     {
         if (Act_UpdatePano != null)
         {
-            Act_UpdatePano(msg);
+            Act_UpdatePano(msg,false);
         }
     }
 

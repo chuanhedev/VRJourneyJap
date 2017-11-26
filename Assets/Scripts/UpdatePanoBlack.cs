@@ -23,6 +23,13 @@ public class UpdatePanoBlack
         facadeManager.StartCoroutine(Updatepano());
     }
 
+    public void UpdatePano(string panoPath)
+    {
+        this.panoPath = panoPath;
+        facadeManager.LoadPano(panoPath);
+        facadeManager.UpdateLabel(panoPath);
+    }
+
     IEnumerator Updatepano()
     {
         livePano_SceneTransition.FadeIn(1);

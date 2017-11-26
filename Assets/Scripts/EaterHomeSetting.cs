@@ -29,19 +29,22 @@ public class EaterHomeSetting : MonoBehaviour
 
     void Update()
     {
-
         //MyPicoLog.SetLog1(Enum.GetName(typeof(CtrlMode), VitoPlugin.CM));
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    FacadeManager._instance.SwitchPicoGrabMode(false);
+        //}
 
         if (PicoGrab._instance == null) return;
 
         if (PicoGrab._instance.IsGrab) return;
 
-        if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD) || Input.GetKeyDown(KeyCode.A))
+        if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD)/* || Input.GetKeyDown(KeyCode.A)*/)
         {
             timer = 0;
         }
 
-        if (Controller.UPvr_GetKey(Pvr_KeyCode.TOUCHPAD) || Input.GetKey(KeyCode.A))
+        if (Controller.UPvr_GetKey(Pvr_KeyCode.TOUCHPAD)/* || Input.GetKey(KeyCode.A)*/)
         {
             if (gradeController.IsShowing) return;
 
