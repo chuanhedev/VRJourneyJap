@@ -15,13 +15,16 @@ public enum MicControllerState{
 public class MicController : MonoBehaviour {
     //public Text message;
     public static MicController instance;
-    public Text hint;
+	public Text hint;
+	public Text txtTimer;
 	[HideInInspector]
 	public MicControllerState state;
 	private MicRecorder micRecorder;
 	private float timer;
 	private bool _enabled = true;
 	private GameObject content;
+	private bool txtTimerEnabled = true;
+	public string serverPort = "8026";
 
 	void Awake(){
         instance = this;
@@ -43,6 +46,8 @@ public class MicController : MonoBehaviour {
 
 	void KeyDown(){
 		if (state == MicControllerState.Idle) {
+			micRecorder.serverUrl = "http://" + ConnectionClientConfig.logicServerIp + ":" + serverPort + "/fileupload";
+			micRecorder.userName = ConnectionClientConfig.UserId.ToString ();
 			timer = Time.time;
 		}
 	}
@@ -53,21 +58,24 @@ public class MicController : MonoBehaviour {
 				SetState (MicControllerState.Ready);
 				timer = Time.time;
 			}
-		}else if (state == MicControllerState.Ready) {
+		} else if (state == MicControllerState.Ready) {
 			if (Time.time - timer > 3) {
 				SetState (MicControllerState.Recording);
 				//timer = Time.time;
 			} else if (Time.time - timer > 2) {
 				showImage (1);
-			}else if (Time.time - timer > 1) {
+			} else if (Time.time - timer > 1) {
 				showImage (2);
 			}
+		} else if (state == MicControllerState.Recording) {
+			UpdateTimer ();
 		}
 	}
 
 	void KeyUp(){
 		if (state == MicControllerState.Recording) {
 			//timer = Time.time;
+			txtTimerEnabled = false;
 			hint.text = "录制完成，开始上传";
 			StartCoroutine (StopRecord ());
 		} else if(state == MicControllerState.Ready){
@@ -103,15 +111,19 @@ public class MicController : MonoBehaviour {
 		state = s;
 		if (state == MicControllerState.Idle) {
 			timer = -1;
+			txtTimer.gameObject.SetActive (false);
 			//hint.text = "wait";
 			content.SetActive (false);
 		}else if (state == MicControllerState.Ready) {
 			content.SetActive (true);
-            UI3DFollowCamera.instance.ResetPos();
-
+			UI3DFollowCamera.instance.ResetPos();
+			txtTimer.gameObject.SetActive (false);
             hint.text = "准备录音";
 			showImage (3);
 		}else if (state == MicControllerState.Recording) {
+			timer = Time.time;
+			txtTimerEnabled = true;
+			txtTimer.gameObject.SetActive (true);
 			micRecorder.StartRecord ();
 			showImage (4);
 			hint.text = "正在录音...松开即停止";
@@ -119,6 +131,13 @@ public class MicController : MonoBehaviour {
 			StartCoroutine (waitAndGotoIdle (1));
 		}
 
+	}
+
+	void UpdateTimer(){
+		if (txtTimerEnabled) {
+			int t = Mathf.FloorToInt (Time.time - timer);
+			txtTimer.text = Mathf.FloorToInt (t / 60f).ToString () + ":" + (t % 60).ToString ("00");
+		}
 	}
 
 	private IEnumerator waitAndGotoIdle(float t){
@@ -143,7 +162,7 @@ public class MicController : MonoBehaviour {
                 }
                 else
                 {
-                    SetState(MicControllerState.Idle);
+					SetState(MicControllerState.Idle);
                 }
             }
 		}

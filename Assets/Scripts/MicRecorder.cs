@@ -11,7 +11,8 @@ public class MicRecorder : MonoBehaviour
 	private AudioClip clip;
 	[HideInInspector]
 	public string userName;
-	public string serverUrl = "http://192.168.1.119:8026/fileupload";
+	[HideInInspector]
+	public string serverUrl;
 //	[HideInInspector]
 //	public string serverFolder = "audio";
 	[HideInInspector]
