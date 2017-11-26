@@ -6,16 +6,16 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Xml;
-public class VitoSDKConfig :MonoBehaviour
+public class VitoSDKConfig : MonoBehaviour
 {
     public static VitoSDKConfig instance { get; private set; }
-    
+
 
     /// <summary>
     /// 从服务器获取的配置文件的路径
     /// </summary>
     private string globalSettingUrl = "http://121.40.93.137:8888/GlobalSetting.txt";
-    
+
     /// <summary>
     /// PC 端内容配置列表
     /// </summary>
@@ -28,7 +28,7 @@ public class VitoSDKConfig :MonoBehaviour
     /// </summary>    
     private string ui_scene_list_data_android_url;
     public JsonData ui_othersscene_list_data_jsondata = new JsonData();
-        
+
     public string FilePath { get; private set; }
 
     private string mLocalConfigPath;
@@ -38,12 +38,15 @@ public class VitoSDKConfig :MonoBehaviour
     /// <summary>
     /// 所有配置文件加载完成
     /// </summary>
-    
-    public bool IsConfigLoadOver {
-        get {
+
+    public bool IsConfigLoadOver
+    {
+        get
+        {
             return isConfigLoadOver;
         }
-        private set {
+        private set
+        {
             isConfigLoadOver = value;
             ConnectionClientConfig.isConfigLoadOver = value;
         }
@@ -53,16 +56,28 @@ public class VitoSDKConfig :MonoBehaviour
     private string _gameServerIP;
     private int _gameServerPort;
 
-    public string logicServerIP {
-        get { return _logicServerIP; } private set { _logicServerIP = value; ConnectionClientConfig.logicServerIp = value; } }    
+    public string logicServerIP
+    {
+        get { return _logicServerIP; }
+        private set { _logicServerIP = value; ConnectionClientConfig.logicServerIp = value; }
+    }
 
-    public int logicServerPort {
-        get { return _logicServerPort; } private set { _logicServerPort = value; ConnectionClientConfig.logicServerPort = value; } }    
-    public string gameServerIP {
-        get { return _gameServerIP; } private set { _gameServerIP = value; ConnectionClientConfig.gameServerIp = value; } }    
+    public int logicServerPort
+    {
+        get { return _logicServerPort; }
+        private set { _logicServerPort = value; ConnectionClientConfig.logicServerPort = value; }
+    }
+    public string gameServerIP
+    {
+        get { return _gameServerIP; }
+        private set { _gameServerIP = value; ConnectionClientConfig.gameServerIp = value; }
+    }
 
-    public int gameServerPort {
-        get { return _gameServerPort; } private set { _gameServerPort = value; ConnectionClientConfig.gameServerPort = value; } }
+    public int gameServerPort
+    {
+        get { return _gameServerPort; }
+        private set { _gameServerPort = value; ConnectionClientConfig.gameServerPort = value; }
+    }
 
     /// <summary>
     /// 网络传输加密字段
@@ -82,7 +97,7 @@ public class VitoSDKConfig :MonoBehaviour
     /// <summary>
     /// 控制模式，分自由模式(用户和自由操作)和控制模式(用户只能接受控制台的操作)
     /// </summary>
-    public CtrlMode ctrlMode = CtrlMode.FreeMode;  
+    public CtrlMode ctrlMode = CtrlMode.FreeMode;
     /// <summary>
     /// 当前用户类型，分管理员和普通用户，管理员即控制台
     /// </summary>
@@ -150,16 +165,17 @@ public class VitoSDKConfig :MonoBehaviour
     /// </summary>
     void ReadGlobalConfigFile()
     {
-        
+
         string globalfile = "GlobalSetting.xml";
-        if(Application.platform==RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android)
         {
             globalfile = "sdcard/vitoresources/" + globalfile;
-        }else if(Application.platform==RuntimePlatform.WindowsEditor||Application.platform==RuntimePlatform.WindowsPlayer)
+        }
+        else if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
         {
             globalfile = @".\" + globalfile;
         }
-     
+
         XmlDocument xmlDoc = new XmlDocument();
         XmlReaderSettings settings = new XmlReaderSettings();
         settings.IgnoreComments = true;
@@ -167,14 +183,14 @@ public class VitoSDKConfig :MonoBehaviour
         xmlDoc.Load(reader);
         XmlNode root = xmlDoc.SelectSingleNode("VitoSDKConfig");
         XmlNodeList xnl = root.ChildNodes;
-        for(int i=0;i<xnl.Count;i++)
+        for (int i = 0; i < xnl.Count; i++)
         {
             string name = xnl.Item(i).Name.ToLower();
             string content = xnl.Item(i).InnerText;
             switch (name)
             {
                 case "logicserverport":
-                    logicServerPort= Int32.Parse(content);
+                    logicServerPort = Int32.Parse(content);
                     break;
                 case "gameserverport":
                     gameServerPort = Int32.Parse(content);
@@ -217,15 +233,15 @@ public class VitoSDKConfig :MonoBehaviour
             {
                 fileroot += ":";
             }
-            videopath=videopath.Replace("/", "\\");
-            videoconfigpath=videoconfigpath.Replace("/", "\\");
-            sceneconfigpath=sceneconfigpath.Replace("/", "\\");
+            videopath = videopath.Replace("/", "\\");
+            videoconfigpath = videoconfigpath.Replace("/", "\\");
+            sceneconfigpath = sceneconfigpath.Replace("/", "\\");
 
-            if(isRelativePath)
+            if (isRelativePath)
             {
                 videopath = @".\" + videopath;
-                videoconfigpath = @".\"  + videoconfigpath;
-                sceneconfigpath = @".\"  + sceneconfigpath;
+                videoconfigpath = @".\" + videoconfigpath;
+                sceneconfigpath = @".\" + sceneconfigpath;
             }
             else
             {
@@ -234,7 +250,7 @@ public class VitoSDKConfig :MonoBehaviour
                 sceneconfigpath = fileroot + "\\" + sceneconfigpath;
             }
 
-            
+
         }
         //如果是控制台则继续读取其他配置文件，否则配置文件读取结束
         if (VitoPlugin.CT == CtrlType.Admin)
@@ -257,25 +273,26 @@ public class VitoSDKConfig :MonoBehaviour
         xmlDoc.Load(reader);
         XmlNode root = xmlDoc.SelectSingleNode("VitoConfig");
         string iconpath = ((XmlElement)root).GetAttribute("iconpath");
-        if(Application.platform==RuntimePlatform.Android)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            iconpath = fileroot + "/" + iconpath+"/";
-        }else if(Application.platform==RuntimePlatform.WindowsEditor||Application.platform==RuntimePlatform.WindowsPlayer)
+            iconpath = fileroot + "/" + iconpath + "/";
+        }
+        else if (Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            iconpath=iconpath.Replace("/", "\\");
-            iconpath = fileroot + "\\" + iconpath+"\\";
+            iconpath = iconpath.Replace("/", "\\");
+            iconpath = fileroot + "\\" + iconpath + "\\";
         }
         XmlNodeList xnl = root.ChildNodes;
-        foreach(XmlNode xn in xnl)
+        foreach (XmlNode xn in xnl)
         {
-            if(isVideo)
+            if (isVideo)
             {
                 VitoVideoConfigData data = new VitoVideoConfigData();
                 XmlNodeList xn0 = xn.ChildNodes;
                 data.title = xn0.Item(0).InnerText;
                 data.intro = xn0.Item(1).InnerText;
-                string tags=xn0.Item(2).InnerText;
-                tags= tags.Replace("|", ",");
+                string tags = xn0.Item(2).InnerText;
+                tags = tags.Replace("|", ",");
                 data.tags = tags.Split(',');
                 data.videoName = xn0.Item(3).InnerText;
                 data.iconPath = iconpath + xn0.Item(4).InnerText;
@@ -293,7 +310,7 @@ public class VitoSDKConfig :MonoBehaviour
                 data.sceneName = xn0.Item(3).InnerText;
                 data.iconPath = iconpath + xn0.Item(4).InnerText;
                 sceneConfigList.Add(data);
-            }            
+            }
         }
         IsConfigLoadOver = true;
     }
@@ -303,23 +320,23 @@ public class VitoSDKConfig :MonoBehaviour
     /// </summary> 
     void GetNetConfigFilePath()
     {
-        NetManager.instance.ProcessDownloadItem(new NetItem() { url = "http://"+ logicServerIP +":"+ logicServerPort + "/GetGlobalSetting" }, (MyWWW www) =>
-        {
-            if (!string.IsNullOrEmpty(www.text))
-            {
-                globalSettingUrl = www.text;
-                NetManager.instance.ProcessDownloadItem(new NetItem() { url = globalSettingUrl }, (MyWWW www1) =>
-                {
-                    if (!string.IsNullOrEmpty(www1.text))
-                    {
-                        JsonData SettingInfoJD = JsonMapper.ToObject(www1.text);
-                        ui_scene_list_data_pc_url = SettingInfoJD["ui_scene_list_data_pc_url"].ToString();
-                        ui_scene_list_data_android_url = SettingInfoJD["ui_scene_list_data_android_url"].ToString();
-                        LoadOtherSettingInfo();
-                    }
-                });
-            }
-        });
+        NetManager.instance.ProcessDownloadItem(new NetItem() { url = "http://" + logicServerIP + ":" + logicServerPort + "/GetGlobalSetting" }, (MyWWW www) =>
+           {
+               if (!string.IsNullOrEmpty(www.text))
+               {
+                   globalSettingUrl = www.text;
+                   NetManager.instance.ProcessDownloadItem(new NetItem() { url = globalSettingUrl }, (MyWWW www1) =>
+                   {
+                       if (!string.IsNullOrEmpty(www1.text))
+                       {
+                           JsonData SettingInfoJD = JsonMapper.ToObject(www1.text);
+                           ui_scene_list_data_pc_url = SettingInfoJD["ui_scene_list_data_pc_url"].ToString();
+                           ui_scene_list_data_android_url = SettingInfoJD["ui_scene_list_data_android_url"].ToString();
+                           LoadOtherSettingInfo();
+                       }
+                   });
+               }
+           });
     }
 
     /// <summary>

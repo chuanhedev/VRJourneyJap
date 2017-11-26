@@ -6,35 +6,8 @@ using UnityEngine;
 public class GrabObjectState : MonoBehaviour
 {
     [HideInInspector] public ObjectGripState objectGripState = ObjectGripState.None;
+    [SerializeField] Transform parent;
     Rigidbody _rigidbody;
-    Vector3 defPos;
-    Quaternion defRotate;
-
-    public Vector3 DefPos
-    {
-        get
-        {
-            return defPos;
-        }
-
-        set
-        {
-            defPos = value;
-        }
-    }
-
-    public Quaternion DefRotate
-    {
-        get
-        {
-            return defRotate;
-        }
-
-        set
-        {
-            defRotate = value;
-        }
-    }
 
     void Awake()
     {
@@ -72,12 +45,22 @@ public class GrabObjectState : MonoBehaviour
         // Debug.Log("SetTrigger-------");
     }
 
+    /// <summary>
+    /// 重置物体
+    /// </summary>
+    public void ResetObject()
+    {
+        transform.rotation = parent.rotation;
+        transform.position = parent.position;
+    }
+
     void Init()
     {
-        defPos = transform.position;
-        defRotate = transform.rotation;
-        _rigidbody = gameObject.AddComponent<Rigidbody>();
-        _rigidbody.drag = 4;
+        if (!_rigidbody)
+        {
+            _rigidbody = gameObject.AddComponent<Rigidbody>();
+            _rigidbody.drag = 4;
+        }
         gameObject.layer = LayerMask.NameToLayer("GrabObject");
     }
 }

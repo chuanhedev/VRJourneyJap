@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PicoGrab : MonoBehaviour
 {
+    public static PicoGrab _instance;
     RaycastHit raycastHit;
     RaycastHit groundRaycastHit;
     Transform controller;
@@ -12,12 +13,13 @@ public class PicoGrab : MonoBehaviour
     Transform direction;
     LayerMask grabObjectLayer;
     Rigidbody grabRigid;
-    bool isGrab;
+    public bool IsGrab { get; set; }
     float grabDis;
     LayerMask groundLayer;
 
     void Awake()
     {
+        _instance = this;
         Find();
         Init();
     }
@@ -25,8 +27,9 @@ public class PicoGrab : MonoBehaviour
     void Update()
     {
         //   if (dot) dot.position = controller.position + direction.forward * 3;
-
-        if (FacadeManager._instance.mode == Mode.Leap) return;
+        FacadeManager facadeManager = FacadeManager._instance;
+        //if (facadeManager.vitoMode == VitoMode.Ctrl) return;
+        if (facadeManager.mode == Mode.Leap) return;
 
         Ray ray = new Ray(controller.position, (dot.position - controller.position).normalized);
 
@@ -37,7 +40,7 @@ public class PicoGrab : MonoBehaviour
         {
             if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD))
             {
-                if (isGrab) return;
+                if (IsGrab) return;
 
                 grabRigid = raycastHit.transform.GetComponent<Rigidbody>();
                 grabRigid.transform.LookAt(grabRigid.position + Vector3.up);
@@ -46,7 +49,7 @@ public class PicoGrab : MonoBehaviour
                 //grabDefRotate = raycastHit.transform.rotation;
                 grabDis = Vector3.Distance(controller.position, raycastHit.transform.position);
                 //  if (!grabObjectList.Contains(raycastHit.transform.gameObject)) grabObjectList.Add(raycastHit.transform.gameObject);
-                isGrab = true;
+                IsGrab = true;
 
             }
 
@@ -71,7 +74,7 @@ public class PicoGrab : MonoBehaviour
         {
             grabRigid.transform.GetComponent<GrabObjectState>().SetTrigger(false);
             grabRigid.isKinematic = false;
-            isGrab = false;
+            IsGrab = false;
         }
 
         //if (Input.GetKeyUp(KeyCode.A))
@@ -82,14 +85,14 @@ public class PicoGrab : MonoBehaviour
         //    //  Debug.Log("释放");
         //}
 
-        if (isGrab)
+        if (IsGrab)
         {
 
             bool isGround = Physics.Raycast(ray, out groundRaycastHit, 20, groundLayer);
 
             if (isGround)
             {
-                grabRigid.position = groundRaycastHit.point + groundRaycastHit.normal * 0.12f;
+                grabRigid.position = groundRaycastHit.point + groundRaycastHit.normal * 0.06f;
             }
             else
             {
