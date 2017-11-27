@@ -14473,7 +14473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRelativePath: 0
   ctrlMode: 0
-  ctrlType: 1
+  ctrlType: 0
   adminStatus: 0
 --- !u!114 &1129231495
 MonoBehaviour:
@@ -14486,7 +14486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0494ef86b1109164c89fead7a76223a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 6
+  type: 0
 --- !u!114 &1129231496
 MonoBehaviour:
   m_ObjectHideFlags: 0

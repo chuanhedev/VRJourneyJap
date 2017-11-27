@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VitoSDKConfig>
   <!--申请的逻辑服务器端口-->	
-  <logicserverport>3001</logicserverport>
+  <logicserverport>3013</logicserverport>
   <!--申请的游戏服务器端口-->	  
-  <gameserverport>4001</gameserverport>
+  <gameserverport>4013</gameserverport>
   <!--服务器IP地址-->	
-  <serverip>192.168.1.116</serverip>
+  <serverip>121.40.93.137</serverip>
   <!--申请的appkey-->
   <appkey>20170307</appkey>
   <!--windows平台文件根目录-->	
