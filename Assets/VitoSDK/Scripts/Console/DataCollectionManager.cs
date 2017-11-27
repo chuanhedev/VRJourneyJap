@@ -16,10 +16,10 @@ using Newtonsoft.Json;
 /// </summary> 
 public enum CDType
 {
-    StarGrade=1, //星级
-    Score=2, //分数
-    StartLevel=3,
-    EndLevel=4,
+    StarGrade = 1, //星级
+    Score = 2, //分数
+    StartLevel = 3,
+    EndLevel = 4,
 
 
     //可以自己添加需要收集的收据类型
@@ -40,7 +40,7 @@ public class CDBase
 /// <summary>
 /// 收集的星级数据的结构
 /// </summary>
-public class CDStar:CDBase
+public class CDStar : CDBase
 {
     public int starGrade; //当前操作获得的星级
     public float sumTime;  //完成当前操作使用的时间
@@ -48,7 +48,7 @@ public class CDStar:CDBase
 /// <summary>
 /// 收集的得分数据的结构
 /// </summary>
-public class CDScore:CDBase
+public class CDScore : CDBase
 {
     public int sumScore; //当前操作获得的分数
     public int score1; //环节1的得分
@@ -59,20 +59,21 @@ public class CDScore:CDBase
 /// <summary>
 /// 关卡或者环节开始消息
 /// </summary>
-public class CDStartLevel:CDBase
+public class CDStartLevel : CDBase
 {
     public string startTime;
 }
 /// <summary>
 /// 关卡或者环节结束消息
 /// </summary>
-public class CDEndLevel:CDBase
+public class CDEndLevel : CDBase
 {
-    public string endTime;        
+    public string endTime;
 }
 #endregion
 
-public class DataCollectionManager : MonoBehaviour {
+public class DataCollectionManager : MonoBehaviour
+{
 
 
     public static DataCollectionManager instance { get; private set; }
@@ -83,13 +84,13 @@ public class DataCollectionManager : MonoBehaviour {
 
     public Dictionary<string, CDStartLevel> collectedStartLevelData = new Dictionary<string, CDStartLevel>();
 
-    public Dictionary<string, CDEndLevel> collectedEndLevelData = new Dictionary<string,CDEndLevel>();
+    public Dictionary<string, CDEndLevel> collectedEndLevelData = new Dictionary<string, CDEndLevel>();
     private Queue<CDBase> collectedData = new Queue<CDBase>();
 
     #region Unity Function
     private void Awake()
     {
-        if(instance!=null)
+        if (instance != null)
         {
             DestroyImmediate(instance);
         }
@@ -101,20 +102,21 @@ public class DataCollectionManager : MonoBehaviour {
         WriteHistoryCollectedData(CDType.Score);
         WriteHistoryCollectedData(CDType.StarGrade);
     }
-    
-	private void Start () {
+
+    private void Start()
+    {
         //注册数据收集消息事件:"s_c_d"
-        VitoPlugin.RegisterActionEvent("s_c_d", (actionname,parameter,deviceid) =>
+        VitoPlugin.RegisterActionEvent("s_c_d", (actionname, parameter, deviceid) =>
          {
-             if(VitoPlugin.CT==CtrlType.Admin)
+             if (VitoPlugin.CT == CtrlType.Admin)
              {
                  //控制台 收到客户端发来的数据
-                 ReceivedCollectedData(parameter,deviceid);
-                 
+                 ReceivedCollectedData(parameter, deviceid);
+
              }
          });
         LoadHistoryCollectionData();
-	}
+    }
 
     void Update()
     {
@@ -131,8 +133,11 @@ public class DataCollectionManager : MonoBehaviour {
     /// </summary>
     /// <param name="content"></param>
     /// <param name="deviceid"></param>
-    private void ReceivedCollectedData(string content,string deviceid)
+    private void ReceivedCollectedData(string content, string deviceid)
     {
+
+        Debug.Log(content + " " + deviceid);
+
         JsonData jd = JsonMapper.ToObject(content);
         int level = (int)jd["level"];
         string levelName = jd["levelname"].ToString();
@@ -152,7 +157,7 @@ public class DataCollectionManager : MonoBehaviour {
                     score3 = (int)jd["score3"],
                     sumScore = (int)jd["sumscore"],
                     sumTime = float.Parse(jd["sumtime"].ToString()),
-                },deviceid);
+                }, deviceid);
                 break;
             case CDType.StarGrade:
                 ReceiveStarData(new CDStar()
@@ -162,7 +167,7 @@ public class DataCollectionManager : MonoBehaviour {
                     levelName = levelName,
                     starGrade = (int)jd["stargrade"],
                     sumTime = float.Parse(jd["sumtime"].ToString()),
-                },deviceid);
+                }, deviceid);
                 break;
             case CDType.StartLevel:
                 CDStartLevel startLevelData = new CDStartLevel()
@@ -173,13 +178,13 @@ public class DataCollectionManager : MonoBehaviour {
                     startTime = jd["starttime"].ToString(),
                 };
                 //如果玩家重复开始此关卡 更新旧有的数据
-                if(collectedStartLevelData.ContainsKey(deviceid))
+                if (collectedStartLevelData.ContainsKey(deviceid))
                 {
                     collectedStartLevelData[deviceid] = startLevelData;
                 }
                 else
                 {
-                    collectedStartLevelData.Add(deviceid,  startLevelData );
+                    collectedStartLevelData.Add(deviceid, startLevelData);
                 }
 
                 //如果玩家重复开始此关卡,即缓存中有之前通关的记录 删除之前保存的数据
@@ -187,7 +192,7 @@ public class DataCollectionManager : MonoBehaviour {
                 {
                     collectedEndLevelData.Remove(deviceid);
                 }
-                UserInfoManager.instance.ChangeUserLevelStatus(deviceid,true,startLevelData.level,startLevelData.levelName);
+                UserInfoManager.instance.ChangeUserLevelStatus(deviceid, true, startLevelData.level, startLevelData.levelName);
                 break;
             case CDType.EndLevel:
                 CDEndLevel endLevelData = new CDEndLevel()
@@ -204,7 +209,7 @@ public class DataCollectionManager : MonoBehaviour {
                 }
                 else
                 {
-                    collectedEndLevelData.Add(deviceid,  endLevelData );
+                    collectedEndLevelData.Add(deviceid, endLevelData);
                 }
 
                 UserInfoManager.instance.ChangeUserLevelStatus(deviceid, false, endLevelData.level, endLevelData.levelName);
@@ -215,7 +220,7 @@ public class DataCollectionManager : MonoBehaviour {
     /// <summary>
     /// 根据数据类型，单独处理，此处为得分数据
     /// </summary>
-    private void ReceiveScoreData(CDScore data,string deviceid)
+    private void ReceiveScoreData(CDScore data, string deviceid)
     {
         if (collectedScoreData.ContainsKey(deviceid))
         {
@@ -240,16 +245,17 @@ public class DataCollectionManager : MonoBehaviour {
     /// <summary>
     /// 根据数据类型，单独处理，此处为星级数据
     /// </summary>
-    private void ReceiveStarData(CDStar data,string deviceid)
+    private void ReceiveStarData(CDStar data, string deviceid)
     {
-        if(collectedStarData.ContainsKey(deviceid))
+        if (collectedStarData.ContainsKey(deviceid))
         {
-            if(collectedStarData[deviceid].Exists((d) => { return d.level == data.level; }))
+            if (collectedStarData[deviceid].Exists((d) => { return d.level == data.level; }))
             {
                 //正常情况下这里不应该是直接替换，而是根据业务逻辑，判断当前得分是否比历史得分高决定是否替换
-               collectedStarData[deviceid].Remove(collectedStarData[deviceid].Find((d) => { return d.level == data.level; }));
+                collectedStarData[deviceid].Remove(collectedStarData[deviceid].Find((d) => { return d.level == data.level; }));
                 collectedStarData[deviceid].Add(data);
-            }else
+            }
+            else
             {
                 collectedStarData[deviceid].Add(data);
             }
@@ -275,7 +281,7 @@ public class DataCollectionManager : MonoBehaviour {
         string historySocreFile = "CollectedScoreData.txt";  //得分历史纪录
 
         string path = Application.streamingAssetsPath + "/" + historyStarFile;
-        if(File.Exists(path))
+        if (File.Exists(path))
         {
             FileStream file = new FileStream(path, FileMode.Open);
             file.Seek(0, SeekOrigin.Begin);
@@ -287,7 +293,7 @@ public class DataCollectionManager : MonoBehaviour {
             file.Close();
         }
         path = Application.streamingAssetsPath + "/" + historySocreFile;
-        if(File.Exists(path))
+        if (File.Exists(path))
         {
             FileStream file = new FileStream(path, FileMode.Open);
             file.Seek(0, SeekOrigin.Begin);
@@ -302,12 +308,12 @@ public class DataCollectionManager : MonoBehaviour {
     /// <summary>
     /// 把收集的数据持久保存
     /// </summary>
-    public void WriteHistoryCollectedData(CDType dataType )
+    public void WriteHistoryCollectedData(CDType dataType)
     {
         string historyStarFile = "CollectedStarData.txt";  //星级数据历史纪录文件名称
         string historySocreFile = "CollectedScoreData.txt";  //得分历史纪录文件名称
         string path = "";
-        switch(dataType)
+        switch (dataType)
         {
             case CDType.StarGrade:
                 //星级数据文件路径
@@ -342,8 +348,8 @@ public class DataCollectionManager : MonoBehaviour {
                 }
                 break;
         }
-        
-        
+
+
 
     }
 
@@ -405,7 +411,7 @@ public class DataCollectionManager : MonoBehaviour {
         if (VitoPlugin.IsNetMode && VitoPlugin.CT != CtrlType.Admin)
         {
             collectedData.Enqueue(data);
-        }            
+        }
     }
 
 
@@ -415,7 +421,7 @@ public class DataCollectionManager : MonoBehaviour {
         {
             return collectedScoreData[deviceId];
         }
-        return null;        
+        return null;
     }
 
     public List<CDStar> GetCollectedStarData(string deviceId)

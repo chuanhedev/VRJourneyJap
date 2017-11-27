@@ -39,7 +39,7 @@ public class PicoGrab : MonoBehaviour
         Ray ray = new Ray(controller.position, (dot.position - controller.position).normalized);
 
         bool isGrabObject = Physics.Raycast(ray, out raycastHit, 10, grabObjectLayer);
-        Debug.Log(isGrabObject);
+        //Debug.Log(isGrabObject);
 
         if (isGrabObject)
         {
@@ -55,10 +55,7 @@ public class PicoGrab : MonoBehaviour
 
                     if (grabObjectState)
                     {
-                        grabRigid.transform.rotation = grabObjectState.Parent.rotation;
-                        grabRigid.isKinematic = true;
-                        //grabDefRotate = raycastHit.transform.rotation;
-                        grabDis = Vector3.Distance(controller.position, raycastHit.transform.position);
+                        InitGrab(grabObjectState);
                         //  if (!grabObjectList.Contains(raycastHit.transform.gameObject)) grabObjectList.Add(raycastHit.transform.gameObject);
                         IsGrab = true;
                     }
@@ -99,7 +96,15 @@ public class PicoGrab : MonoBehaviour
         {
             DoGrab(ray);
         }
+    }
 
+    void InitGrab(GrabObjectState grabObjectState)
+    {
+        grabRigid.transform.rotation = grabObjectState.Parent.rotation;
+        grabRigid.isKinematic = true;
+        grabObjectState.SetTrigger(true);
+        grabObjectState.objectGripState = ObjectGripState.PicoController;
+        grabDis = Vector3.Distance(controller.position, raycastHit.transform.position);
     }
 
     void DoGrab(Ray ray)
@@ -121,7 +126,9 @@ public class PicoGrab : MonoBehaviour
     {
         if (grabRigid)
         {
-            grabRigid.transform.GetComponent<GrabObjectState>().SetTrigger(false);
+            GrabObjectState grabObjectState = grabRigid.transform.GetComponent<GrabObjectState>();
+            grabObjectState.SetTrigger(false);
+            grabObjectState.objectGripState = ObjectGripState.None;
             grabRigid.isKinematic = false;
             grabRigid = null;
             IsGrab = false;

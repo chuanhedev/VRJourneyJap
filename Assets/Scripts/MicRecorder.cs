@@ -55,7 +55,7 @@ public class MicRecorder : MonoBehaviour
 
         try
         {
-            clip = Microphone.Start(null, false, 30, samplingRate);
+            clip = Microphone.Start(null, false, 300, samplingRate);
 
         }
         catch (Exception e)
@@ -84,36 +84,48 @@ public class MicRecorder : MonoBehaviour
 	public IEnumerator StopRecord()
     {
 		if (recording && !busy) {
-			Debug.Log ("return return null");
 			busy = true;
-			//TimerManager.StopTimerEvent(timerInfo);
-			// TimerManager.RemoveTimerEvent(timerInfo);
-			// index = 0;
-			int audioLength;
-			int position = Microphone.GetPosition (null);
-			var soundData = new float[clip.samples * clip.channels];
-			clip.GetData (soundData, 0);
-			var newData = new float[position * clip.channels];
-			//Copy the used samples to a new array
-			for (int i = 0; i < newData.Length; i++) {
-				newData [i] = soundData [i];
-			}
-			var newClip = AudioClip.Create (clip.name,
-				              position,
-				              clip.channels,
-				              clip.frequency,
-				              false,
-				              false);
-			newClip.SetData (newData, 0);        //Give it the data from the old clip
+            //TimerManager.StopTimerEvent(timerInfo);
+            // TimerManager.RemoveTimerEvent(timerInfo);
+            // index = 0;
+            bool err = false;
+            try
+            {
+                int audioLength;
+                int position = Microphone.GetPosition(null);
+                var soundData = new float[clip.samples * clip.channels];
+                clip.GetData(soundData, 0);
+                var newData = new float[position * clip.channels];
+                //Copy the used samples to a new array
+                for (int i = 0; i < newData.Length; i++)
+                {
+                    newData[i] = soundData[i];
+                }
+                var newClip = AudioClip.Create(clip.name,
+                                  position,
+                                  clip.channels,
+                                  clip.frequency,
+                                  false,
+                                  false);
+                newClip.SetData(newData, 0);        //Give it the data from the old clip
 
-			//Replace the old clip
-			AudioClip.Destroy (clip);
-			clip = newClip;
-			yield return SaveRecord ();
-			recording = false;
-			uploadError = MicUtils.error;
-			uploadResponse = MicUtils.text;
-			busy = false;
+                //Replace the old clip
+                AudioClip.Destroy(clip);
+                clip = newClip;
+            } catch (Exception e)
+            {
+                Debug.Log(e.StackTrace);
+                err = true;
+            }
+            if (!err)
+            {
+                yield return SaveRecord();
+                uploadError = MicUtils.error;
+                uploadResponse = MicUtils.text;
+            }
+
+            recording = false;
+            busy = false;
 		} else {
 			uploadError = "";
 			uploadResponse = MicUploadResponse.Cancelled;

@@ -6,36 +6,41 @@ using System.IO;
 using System;
 using Newtonsoft.Json;
 using System.Text;
-public class UserInfoManager : MonoBehaviour {
+public class UserInfoManager : MonoBehaviour
+{
     public static UserInfoManager instance { get; set; }
 
     private static Dictionary<string, UserInfoData> HistoryUserinfoMap = new Dictionary<string, UserInfoData>();
 
-    public System.Action<int,int> OnUserCountChange;
+    public System.Action<int, int> OnUserCountChange;
 
-    public void RegisterBroadcastMsg( ActionController actCtrl)
+    public void RegisterBroadcastMsg(ActionController actCtrl)
     {
         {
-            VitoPlugin.RegisterActionEvent("PlayerSceneLoading", (string type, string content, string deviceid) => {
+            VitoPlugin.RegisterActionEvent("PlayerSceneLoading", (string type, string content, string deviceid) =>
+            {
                 ChangeUserStatus(content, UserPosStatus.SceneIsLoading);
             });
-            VitoPlugin.RegisterActionEvent("PlayerRuning", (string type, string content, string deviceid) => {
+            VitoPlugin.RegisterActionEvent("PlayerRuning", (string type, string content, string deviceid) =>
+            {
                 ChangeUserStatus(content, UserPosStatus.InRuningScene);
             });
-            VitoPlugin.RegisterActionEvent("PlayerHeadLeave", (string type, string content, string deviceid) => {
+            VitoPlugin.RegisterActionEvent("PlayerHeadLeave", (string type, string content, string deviceid) =>
+            {
                 UserInfoManager.instance.ChangeHMDStatus(content, UserHMDStatus.PutOff);
             });
-            VitoPlugin.RegisterActionEvent("PlayerHeadPutOn", (string type, string content, string deviceid) => {
+            VitoPlugin.RegisterActionEvent("PlayerHeadPutOn", (string type, string content, string deviceid) =>
+            {
                 UserInfoManager.instance.ChangeHMDStatus(content, UserHMDStatus.PutOn);
             });
         }
-        
+
     }
 
     private void Awake()
     {
         instance = this;
-        if(VitoPlugin.IsNetMode&&VitoPlugin.CT==CtrlType.Admin)
+        if (VitoPlugin.IsNetMode && VitoPlugin.CT == CtrlType.Admin)
         {
             LoadHistoryUserData();
         }
@@ -56,8 +61,8 @@ public class UserInfoManager : MonoBehaviour {
 
             string content = Encoding.UTF8.GetString(byData);
             //Debug.Log(content);
-            Dictionary<string ,UserInfoData> historyUserInfoData = JsonConvert.DeserializeObject<Dictionary<string, UserInfoData>>(content);
-            if(historyUserInfoData!=null)
+            Dictionary<string, UserInfoData> historyUserInfoData = JsonConvert.DeserializeObject<Dictionary<string, UserInfoData>>(content);
+            if (historyUserInfoData != null)
             {
                 HistoryUserinfoMap = historyUserInfoData;
             }
@@ -67,16 +72,16 @@ public class UserInfoManager : MonoBehaviour {
     {
         string historyFileName = "UserInfoData.txt";
         string path = Application.streamingAssetsPath + "/" + historyFileName;
-       
+
         if (File.Exists(path))
         {
             File.Delete(path);
         }
 
         {
-            FileStream file = new FileStream(path,FileMode.Create);
+            FileStream file = new FileStream(path, FileMode.Create);
             StreamWriter sw = new StreamWriter(file);
-            string content=JsonConvert.SerializeObject(HistoryUserinfoMap);
+            string content = JsonConvert.SerializeObject(HistoryUserinfoMap);
             sw.Write(content);
             sw.Flush();
             sw.Close();
@@ -84,10 +89,11 @@ public class UserInfoManager : MonoBehaviour {
     }
     public UserInfoData getHistoryUserData(string deviceId)
     {
-        if(HistoryUserinfoMap.ContainsKey(deviceId))
+        if (HistoryUserinfoMap.ContainsKey(deviceId))
         {
             return HistoryUserinfoMap[deviceId];
-        }else
+        }
+        else
         {
             return null;
         }
@@ -95,19 +101,20 @@ public class UserInfoManager : MonoBehaviour {
 
     public void RefreshUserInfoData(UserInfoData data)
     {
-        if(HistoryUserinfoMap.ContainsKey(data.deviceid))
+        if (HistoryUserinfoMap.ContainsKey(data.deviceid))
         {
             HistoryUserinfoMap[data.deviceid] = data;
-        }else
+        }
+        else
         {
-            HistoryUserinfoMap.Add(data.deviceid,data);
+            HistoryUserinfoMap.Add(data.deviceid, data);
         }
         WriteHistoryUserData();
     }
 
     public void HMDMounted()
     {
-        VitoPlugin.RequestActionEvent("PlayerHeadPutOn",VitoPlugin.UserId.ToString());
+        VitoPlugin.RequestActionEvent("PlayerHeadPutOn", VitoPlugin.UserId.ToString());
     }
 
     public void HMDUnmounted()
@@ -122,16 +129,16 @@ public class UserInfoManager : MonoBehaviour {
     /// <summary>
     /// 有新用户进入控制台
     /// </summary>
-    public void AddUser(int userId,string deviceId)
+    public void AddUser(int userId, string deviceId)
     {
         UserInfoData historyData = getHistoryUserData(deviceId);
 
-        if(!UserInfoList.Exists((x)=>(x.deviceid==deviceId)))
+        if (!UserInfoList.Exists((x) => (x.deviceid == deviceId)))
         {
             UserInfoData userInfoData = new UserInfoData();
             userInfoData.deviceid = deviceId;
             userInfoData.userid = userId;
-            if(historyData!=null)
+            if (historyData != null)
             {
                 userInfoData.name = historyData.name;
                 userInfoData.number = historyData.number;
@@ -139,7 +146,8 @@ public class UserInfoManager : MonoBehaviour {
             }
             UserInfoList.Add(userInfoData);
             HostUIManager.instance.OnUserLogIn(userInfoData);
-        }else
+        }
+        else
         {
             UserInfoData userInfoData = GetUserInfoWithDeviceId(deviceId);
             userInfoData.userid = userId;
@@ -178,8 +186,8 @@ public class UserInfoManager : MonoBehaviour {
     /// </summary>
     public void OnUserLeave(int userId)
     {
-        UserInfoData data=GetUserInfoWithUserId(userId);
-        if(data!=null)
+        UserInfoData data = GetUserInfoWithUserId(userId);
+        if (data != null)
         {
             data.mHMDStatus = UserHMDStatus.PutOff;
             data.mSceneStatus = UserPosStatus.None;
@@ -192,10 +200,10 @@ public class UserInfoManager : MonoBehaviour {
     public void OnRefreshUserInfo(UserInfoData userinfoData)
     {
         RefreshUserInfoData(userinfoData);
-        if(userinfoData.OnRefresh!=null)
+        if (userinfoData.OnRefresh != null)
         {
             userinfoData.OnRefresh();
-        }                
+        }
     }
 
     /// <summary>
@@ -203,11 +211,12 @@ public class UserInfoManager : MonoBehaviour {
     /// </summary>
     public bool IsAllCompleted
     {
-        get {
+        get
+        {
             bool rtn = true;
-            for(int i=0;i<UserInfoList.Count;i++)
+            for (int i = 0; i < UserInfoList.Count; i++)
             {
-                 if( UserInfoList[i].mSceneStatus!=UserPosStatus.SceneLoadedOver)
+                if (UserInfoList[i].mSceneStatus != UserPosStatus.SceneLoadedOver)
                 {
                     rtn = false;
                     break;
@@ -234,7 +243,7 @@ public class UserInfoManager : MonoBehaviour {
     /// <returns></returns>
     public UserInfoData GetUserInfoWithDeviceId(string deviceId)
     {
-        UserInfoData userData=UserInfoList.Find((x) => x.deviceid == deviceId);
+        UserInfoData userData = UserInfoList.Find((x) => x.deviceid == deviceId);
         return userData;
     }
 
@@ -263,7 +272,7 @@ public class UserInfoManager : MonoBehaviour {
     /// <summary>
     /// 用户电量信息更新
     /// </summary>
-    public void OnUserPowerChange(string deviceid,float power)
+    public void OnUserPowerChange(string deviceid, float power)
     {
         if (VitoPlugin.CT == CtrlType.Admin)
         {
@@ -281,29 +290,29 @@ public class UserInfoManager : MonoBehaviour {
     /// <summary>
     /// 用户状态更新
     /// </summary>
-    public void ChangeUserStatus(string userIds,UserPosStatus status)
+    public void ChangeUserStatus(string userIds, UserPosStatus status)
     {
         int userId = System.Int32.Parse(userIds);
-        if(VitoPlugin.CT ==CtrlType.Admin&& VitoPlugin.UserId!= userId)
+        if (VitoPlugin.CT == CtrlType.Admin && VitoPlugin.UserId != userId)
         {
-            
+
             UserInfoData userData = GetUserInfoWithUserId(userId);
-            if(userData!=null)
+            if (userData != null)
             {
                 userData.mSceneStatus = status;
             }
             else
             {
-                DebugHealper.Log("user:"+ userId + " not exist ");
+                DebugHealper.Log("user:" + userId + " not exist ");
             }
-            
+
         }
         TempRefreshUserStatusCount();
     }
     /// <summary>
     /// 用户头显状态更新
     /// </summary>
-    public void ChangeHMDStatus(string userids,UserHMDStatus status)
+    public void ChangeHMDStatus(string userids, UserHMDStatus status)
     {
         //Debug.Log("change hmd status: "+ userids+" status:" +status);
         int userId = System.Int32.Parse(userids);
@@ -322,7 +331,7 @@ public class UserInfoManager : MonoBehaviour {
         TempRefreshUserStatusCount();
     }
 
-    public  void OnUserSelected(UserInfoData userInfoData)
+    public void OnUserSelected(UserInfoData userInfoData)
     {
 
     }
@@ -331,7 +340,7 @@ public class UserInfoManager : MonoBehaviour {
     /// 观察用户
     /// </summary>
     /// <param name="userInfoData"></param>
-    public  void OnLookUser(UserInfoData userInfoData)
+    public void OnLookUser(UserInfoData userInfoData)
     {
         if (VitoPlugin.CT == CtrlType.Admin && userInfoData != null && userInfoData.userid > 0)
         {

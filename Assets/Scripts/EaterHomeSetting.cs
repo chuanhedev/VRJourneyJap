@@ -17,14 +17,13 @@ public class EaterHomeSetting : MonoBehaviour
     void Start()
     {
         MicController.instance.enabled = false;
-        //Debug.Log("Start-----");
+
         FacadeManager._instance.SwitchPicoGrabMode(true);
     }
 
     void OnDestroy()
     {
         MicController.instance.enabled = true;
-        // Debug.Log("OnDestroy-----");
     }
 
     void Update()

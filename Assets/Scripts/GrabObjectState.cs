@@ -23,6 +23,11 @@ public class GrabObjectState : MonoBehaviour
         Init();
     }
 
+    void Start()
+    {
+        //Init();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         RigidHand rigidHand = other.transform.GetComponentInParent<RigidHand>();
@@ -39,7 +44,7 @@ public class GrabObjectState : MonoBehaviour
         if (FacadeManager._instance.vitoMode == VitoMode.Ctrl) return;
 
         HandGrabController handGrabController = rigidHand.GetComponentInChildren<HandGrabController>();
-        AddForceForHand(handGrabController.HandVelocity);
+        AddForceWithHand(handGrabController.HandVelocity);
         //Debug.Log("AddForceForHand-------");
     }
 
@@ -53,11 +58,15 @@ public class GrabObjectState : MonoBehaviour
         }
     }
 
-    void AddForceForHand(Vector3 handVelocity)
+    void AddForceWithHand(Vector3 handVelocity)
     {
         _rigidbody.AddForce(handVelocity * _rigidbody.mass * 30, ForceMode.Force);
     }
 
+    /// <summary>
+    /// trigger
+    /// </summary>
+    /// <param name="isTrigger"></param>
     public void SetTrigger(bool isTrigger)
     {
         Collider[] colliders = GetComponents<Collider>();
@@ -70,7 +79,7 @@ public class GrabObjectState : MonoBehaviour
         }
         // Debug.Log("SetTrigger-------");
     }
-
+     
     /// <summary>
     /// 重置物体
     /// </summary>
@@ -87,6 +96,11 @@ public class GrabObjectState : MonoBehaviour
             _rigidbody = gameObject.AddComponent<Rigidbody>();
             _rigidbody.drag = 4;
         }
+        if (VitoPlugin.CT == CtrlType.Admin)
+        {
+            _rigidbody.isKinematic = true;
+        }
+
         gameObject.layer = LayerMask.NameToLayer("GrabObject");
     }
 }

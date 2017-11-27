@@ -11,19 +11,45 @@ public class GrabObjectManager : MonoBehaviour
     {
         _instance = this;
         Find();
-        ResetAllGrabObject();
+        ResetAllPosAndRos();
     }
 
-    public void ResetAllGrabObject()
+    public void ResetAllPosAndRos()
     {
         if (grabObjectStates == null) return;
 
         for (int i = 0; i < grabObjectStates.Length; i++)
         {
-            // Debug.Log(grabObjectStates[i].name);
             grabObjectStates[i].ResetObject();
         }
 
+    }
+
+    public void SetAllTrigger(bool isTrigger)
+    {
+        if (grabObjectStates == null) return;
+
+        for (int i = 0; i < grabObjectStates.Length; i++)
+        {
+            grabObjectStates[i].SetTrigger(isTrigger);
+        }
+    }
+
+    public void SetSync(GrabObjectState grabObjectState)
+    {
+        if (grabObjectStates == null) return;
+
+        for (int i = 0; i < grabObjectStates.Length; i++)
+        {
+            if (grabObjectStates[i] == grabObjectState)
+            {
+                grabObjectStates[i].GetComponent<UnitInfo>().enabled = true;
+            }
+            else
+            {
+                grabObjectStates[i].GetComponent<UnitInfo>().enabled = false;
+            }
+        }
     }
 
     void Find()

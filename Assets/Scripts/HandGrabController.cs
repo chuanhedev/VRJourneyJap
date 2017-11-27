@@ -8,7 +8,8 @@ public enum ObjectGripState
 {
     None,
     Right,
-    Left
+    Left,
+    PicoController
 }
 
 public class HandGrabController : MonoBehaviour

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class GradeController : MonoBehaviour
     void Awake()
     {
         Find();
+        RegisterAction();
     }
 
     void Find()
@@ -43,6 +45,10 @@ public class GradeController : MonoBehaviour
     {
         if (IsShowing) return;
 
+        if (VitoPlugin.CT == CtrlType.Player && VitoPlugin.isMaster)
+        {
+            VitoPlugin.RequestActionEvent("ShowGrade");
+        }
         IsShowing = true;
         tablewareManager.CheckGrade();
         StartCoroutine(ShowGradeNum());
@@ -65,8 +71,20 @@ public class GradeController : MonoBehaviour
         gradeText.text = tablewareManager.Grade + "分";
         gradeAnim.SetTrigger("ShowGrade");
         tablewareManager.End();
+
         yield return new WaitForSeconds(3f);
         IsShowing = false;
         HideGrade();
+    }
+
+    void RegisterAction()
+    {
+        if (VitoPlugin.CT == CtrlType.Admin)
+        {
+            VitoPlugin.RegisterActionEvent("ShowGrade", (string type, string content, string deviceid) =>
+            {
+                ShowGrade();
+            });
+        }
     }
 }

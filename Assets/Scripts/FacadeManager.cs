@@ -140,9 +140,9 @@ public class FacadeManager : MonoBehaviour
             {
                 mode = Mode.Leap;
                 leap.SetActive(true);
-                japEatery.transform.position = new Vector3(0.2f, 2.26f, -3.97f);
+                japEatery.transform.position = new Vector3(0.2f, 2.26f, -4f);
             }
-            GrabObjectManager._instance.ResetAllGrabObject();
+            GrabObjectManager._instance.ResetAllPosAndRos();
         }
     }
 
