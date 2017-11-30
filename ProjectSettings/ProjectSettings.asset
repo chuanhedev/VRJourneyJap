@@ -138,6 +138,7 @@ PlayerSettings:
   useHDRDisplay: 0
   applicationIdentifier:
     Android: com.chkj.JourneyJapProject
+    Standalone: com.chkj.JourneyJapProject
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
