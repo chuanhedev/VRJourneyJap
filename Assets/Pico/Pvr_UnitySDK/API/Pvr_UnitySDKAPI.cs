@@ -127,6 +127,7 @@ namespace Pvr_UnitySDKAPI
 
 
         #region DllFuncation
+#if !UNITY_STANDALONE_WIN
 
         [DllImport(LibFileName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int Pvr_Init(int index);
@@ -158,10 +159,13 @@ namespace Pvr_UnitySDKAPI
 
         [DllImport(LibFileName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int Pvr_GetSensorMagnet(int index, ref float x, ref float y, ref float z);
-        
+#endif
         #endregion
 
         #region Public Static Funcation
+
+#if !UNITY_STANDALONE_WIN
+
         public static int UPvr_Init(int index)
         {
             return Pvr_Init(index);
@@ -177,17 +181,18 @@ namespace Pvr_UnitySDKAPI
             Render.UPvr_GetIntConfig(enumindex, ref platformType);
             if (platformType == 1)
             {
-                 return Pvr_GetPsensorState();
-            }else
+                return Pvr_GetPsensorState();
+            }
+            else
             {
                 int state = Pvr_GetAndroidPsensorState();
-                if (state != 0 && state != -1 )
+                if (state != 0 && state != -1)
                 {
                     state = 1;
                 }
                 return state;
             }
-           
+
         }
         public static void UPvr_UnregisterPsensor()
         {
@@ -242,14 +247,14 @@ namespace Pvr_UnitySDKAPI
         }
         public static int UPvr_Enable6DofModule(bool enable)
         {
-#if ANDROID_DEVICE  
+#if ANDROID_DEVICE
             return    Pvr_Enable6DofModule(enable);
 #endif
             return 0;
         }
         public static void Pvr_InitPsensor()
         {
-#if ANDROID_DEVICE   
+#if ANDROID_DEVICE
             try
             {
                 Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaSysActivityClass, "initPsensor",Pvr_UnitySDKManager.pvr_UnitySDKRender.activity);
@@ -279,7 +284,7 @@ namespace Pvr_UnitySDKAPI
         }
         public static void Pvr_UnregisterPsensor()
         {
-#if ANDROID_DEVICE   
+#if ANDROID_DEVICE
             try
             {
                 Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaSysActivityClass, "unregisterListener");
@@ -290,6 +295,7 @@ namespace Pvr_UnitySDKAPI
             }
 #endif
         }
+#endif
         #endregion
 
     }
@@ -327,6 +333,8 @@ namespace Pvr_UnitySDKAPI
         #endregion
 
         #region DllFuncation
+#if !UNITY_STANDALONE_WIN
+
         [DllImport(LibFileName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int Pvr_SetPupillaryPoint(bool enable);
 
@@ -341,7 +349,7 @@ namespace Pvr_UnitySDKAPI
 
         [DllImport(LibFileName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int Pvr_GetFloatConfig(int configsenum, ref float res);
-
+#endif
 
 
         #endregion
@@ -363,10 +371,12 @@ namespace Pvr_UnitySDKAPI
 #endif
             return 0;
         }
+#if !UNITY_STANDALONE_WIN
 
         public static int UPvr_GetIntConfig(int configsenum, ref int res)
         {
-            return Pvr_GetIntConfig(configsenum, ref res);
+
+            return Pvr_GetIntConfig(configsenum, ref res);           
         }
 
         public static int UPvr_GetFloatConfig(int configsenum, ref float res)
@@ -387,6 +397,7 @@ namespace Pvr_UnitySDKAPI
         {
             Pvr_SetCurrentHMDType(type);
         }
+#endif
         #endregion
 
     }
@@ -503,18 +514,22 @@ namespace Pvr_UnitySDKAPI
         #endregion
 
         #region DllFuncation
+#if !UNITY_STANDALONE_WIN
         [DllImport(LibFileName, CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr Pvr_GetSDKVersion();
+#endif
         #endregion
 
         #region Public Static Funcation
         public static string UPvr_GetSDKVersion()
         {
+#if !UNITY_STANDALONE_WIN
             IntPtr ptr = Pvr_GetSDKVersion();
             if (ptr != IntPtr.Zero)
             {
                 return Marshal.PtrToStringAnsi(ptr);
             }
+#endif
             return null;
         }
 
@@ -569,7 +584,7 @@ namespace Pvr_UnitySDKAPI
             return currentActivity;
         }
 #endif
-       
+
         public static void UPvr_ShutDown()
         {
 #if ANDROID_DEVICE
@@ -579,7 +594,7 @@ namespace Pvr_UnitySDKAPI
 
         public static void UPvr_Reboot()
         {
-#if ANDROID_DEVICE            
+#if ANDROID_DEVICE
             System.UPvr_CallStaticMethod( Pvr_UnitySDKRender.javaSysActivityClass, "Pvr_Reboot",UPvr_GetCurrentActivity());
 #endif
         }
@@ -614,33 +629,30 @@ namespace Pvr_UnitySDKAPI
 #endif
             return true;
         }
-   public static void UPvr_StartVRModel()
-        { 
+        public static void UPvr_StartVRModel()
+        {
 #if ANDROID_DEVICE
              Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaVrActivityClass, "startVRModel");
 #endif
         }
-		public static void UPvr_RemovePlatformLogo()
-		{
+        public static void UPvr_RemovePlatformLogo()
+        {
 #if ANDROID_DEVICE
 			Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaVrActivityClass, "removePlatformLogo");
 #endif
-		}
-		public static void UPvr_ShowPlatformLogo()
-		{
+        }
+        public static void UPvr_ShowPlatformLogo()
+        {
 #if ANDROID_DEVICE
 			Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaVrActivityClass, "showPlatformLogo");
 #endif
-		}
+        }
         public static void UPvr_StopVRModel()
         {
 #if ANDROID_DEVICE
              Pvr_UnitySDKAPI.System.UPvr_CallStaticMethod(Pvr_UnitySDKRender.javaVrActivityClass, "stopVRModel");
 #endif
         }
-#endregion
-
-
+        #endregion
     }
-
 }

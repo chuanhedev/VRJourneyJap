@@ -23,6 +23,15 @@ public class HideSceneList : MonoBehaviour
 
     public void OnRefreshClick()
     {
+        StartCoroutine(Loading());
+    }
+
+    IEnumerator Loading()
+    {
+        load.SetActive(true);
+
+        yield return new WaitForSeconds(Random.Range(3, 6));
+
         if (PlayerPrefs.GetInt("Refresh1") != 1)
         {
             if (child4) child4.SetActive(true);
@@ -33,15 +42,8 @@ public class HideSceneList : MonoBehaviour
             if (child5) child5.SetActive(true);
             PlayerPrefs.SetInt("Refresh2", 1);
         }
-
+        yield return new WaitForSeconds(0.2f);
         scrollbar.value = 1;
-        StartCoroutine(Loading());
-    }
-
-    IEnumerator Loading()
-    {
-        load.SetActive(true);
-        yield return new WaitForSeconds(Random.Range(3, 6));
         load.SetActive(false);
         StartCoroutine(ScrollBarValue());
     }

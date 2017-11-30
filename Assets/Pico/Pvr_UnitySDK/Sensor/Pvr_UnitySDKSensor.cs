@@ -8,17 +8,17 @@
 using System;
 using UnityEngine;
 
-public class Pvr_UnitySDKSensor 
+public class Pvr_UnitySDKSensor
 {
 
-    public  Pvr_UnitySDKSensor()
+    public Pvr_UnitySDKSensor()
     {
         Init();
     }
 
     /************************************    Properties  *************************************/
     #region Properties
-   
+
     public Pvr_UnitySDKPose SensorValvue;
 
     public bool HMDUsing = true;
@@ -59,12 +59,15 @@ public class Pvr_UnitySDKSensor
     }
     public bool InitUnitySDKSensor()
     {
-       
+
         bool enable = false;
         try
-        {            
+        {
+#if !UNITY_STANDALONE_WIN
+            
             if (Pvr_UnitySDKAPI.Sensor.UPvr_Init((int)sensorIndex) == 0)
                 enable = true;
+#endif
         }
         catch (System.Exception e)
         {
@@ -78,6 +81,8 @@ public class Pvr_UnitySDKSensor
         bool enable = false;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             int ability6dof = 0;
             int enumindex = (int)Pvr_UnitySDKAPI.GlobalIntConfigs.ABILITY6DOF;
             Pvr_UnitySDKAPI.Render.UPvr_GetIntConfig(enumindex, ref ability6dof);
@@ -89,11 +94,13 @@ public class Pvr_UnitySDKSensor
                     enable = true;
                     Pvr_UnitySDKManager.PVRNeck = false;
                 } 
-            }
+            }      
             else
             {
-                Debug.LogWarning("This platform does NOT support 6 Dof ! " );
+                Debug.LogWarning("This platform does NOT support 6 Dof ! ");
             }
+#endif
+
         }
         catch (System.Exception e)
         {
@@ -102,14 +109,17 @@ public class Pvr_UnitySDKSensor
         }
         return enable;
     }
-  
+
     public bool StartUnitySDKSensor()
     {
         bool enable = false;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             if (Pvr_UnitySDKAPI.Sensor.UPvr_StartSensor((int)sensorIndex) == 0)
                 enable = true;
+#endif
         }
         catch (System.Exception e)
         {
@@ -124,8 +134,11 @@ public class Pvr_UnitySDKSensor
         bool enable = false;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             if (Pvr_UnitySDKAPI.Sensor.UPvr_StopSensor((int)sensorIndex) == 0)
                 enable = true;
+#endif
 
         }
         catch (System.Exception e)
@@ -141,11 +154,14 @@ public class Pvr_UnitySDKSensor
         bool enable = false;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             if (Pvr_UnitySDKAPI.Sensor.UPvr_ResetSensor((int)sensorIndex) == 0)
             {
                 enable = true;
                 Debug.LogError("ResetUnitySDKSensor OK! ");
             }
+#endif
         }
         catch (System.Exception e)
         {
@@ -164,6 +180,8 @@ public class Pvr_UnitySDKSensor
             float w = 0, x = 0, y = 0, z = 0, px = 0, py = 0, pz = 0;
             try
             {
+#if !UNITY_STANDALONE_WIN
+
                 int returns = Pvr_UnitySDKAPI.Sensor.UPvr_GetMainSensorState(ref x, ref y, ref z, ref w,  ref px, ref py, ref pz, ref fov, ref Pvr_UnitySDKManager.SDK.RenderviewNumber);
                 if (returns == 0)
                 {
@@ -182,6 +200,7 @@ public class Pvr_UnitySDKSensor
                 }
                 if (returns == -1)
                     Debug.Log("sesnor update --- GetUnitySDKSensorState     -1    ");
+#endif
             }
             catch (System.Exception e)
             {
@@ -192,15 +211,17 @@ public class Pvr_UnitySDKSensor
         }
         return enable;
     }
-   
+
     public bool GetUnitySDKPSensorState()
     {
         bool enable = false;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             if (Pvr_UnitySDKAPI.Sensor.UPvr_ResetSensor((int)sensorIndex) == 0)
                 enable = true;
-
+#endif
         }
         catch (System.Exception e)
         {
@@ -209,7 +230,7 @@ public class Pvr_UnitySDKSensor
         }
         return enable;
     }
-    
+
     #endregion
 
 

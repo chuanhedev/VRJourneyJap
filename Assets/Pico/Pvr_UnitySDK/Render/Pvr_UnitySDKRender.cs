@@ -100,10 +100,13 @@ public class Pvr_UnitySDKRender
         int h = 1024;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             int enumindex = (int)Pvr_UnitySDKAPI.GlobalIntConfigs.EYE_TEXTURE_RESOLUTION0;
             Pvr_UnitySDKAPI.Render.UPvr_GetIntConfig(enumindex, ref w);
             enumindex = (int)Pvr_UnitySDKAPI.GlobalIntConfigs.EYE_TEXTURE_RESOLUTION1;
             Pvr_UnitySDKAPI.Render.UPvr_GetIntConfig(enumindex, ref h);
+#endif
         }
         catch (System.Exception e)
         {
@@ -120,12 +123,15 @@ public class Pvr_UnitySDKRender
         float fov = 102;
         try
         {
+#if !UNITY_STANDALONE_WIN
+
             int enumindex = (int)Pvr_UnitySDKAPI.GlobalFloatConfigs.FOV;
             Pvr_UnitySDKAPI.Render.UPvr_GetFloatConfig(enumindex, ref fov);
             if (fov <= 0)
             {
                 fov = 102;
             }
+#endif
         }
         catch (System.Exception e)
         {
@@ -192,10 +198,10 @@ public class Pvr_UnitySDKRender
         canConnecttoActivity = true;
     }
 
-    #endregion
+#endregion
 
     /************************************  Private Interfaces **********************************/
-    #region     PrivateInterfaces
+#region     PrivateInterfaces
     private bool UpdateRenderParaFrame()
     {
         Pvr_UnitySDKManager.SDK.EyeFov = GetEyeFOV();
@@ -208,6 +214,8 @@ public class Pvr_UnitySDKRender
         {
             if (CreatRendertexture())
             {
+#if !UNITY_STANDALONE_WIN
+
                 float separation = 0.0625f;
                 int enumindex = (int)Pvr_UnitySDKAPI.GlobalFloatConfigs.IPD;
                 if (0 != Pvr_UnitySDKAPI.Render.UPvr_GetFloatConfig(enumindex, ref separation))
@@ -217,6 +225,7 @@ public class Pvr_UnitySDKRender
                 }
                 Pvr_UnitySDKManager.SDK.leftEyeOffset = new Vector3(-separation / 2, 0, 0);
                 Pvr_UnitySDKManager.SDK.rightEyeOffset = new Vector3(separation / 2, 0, 0);
+#endif
                 return true;
             }
         }
@@ -273,6 +282,6 @@ public class Pvr_UnitySDKRender
         }
         return true;
     }
-    #endregion
+#endregion
 
 }

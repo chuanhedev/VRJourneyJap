@@ -32,7 +32,7 @@ public class MicController : MonoBehaviour {
 		content = transform.GetChild (0).gameObject;
 		SetState (MicControllerState.Idle);
 
-        userName = VitoPlugin.UserId.ToString();
+        userName = VitoPlugin.DeviceID;
 	}
 
 	public string userName{

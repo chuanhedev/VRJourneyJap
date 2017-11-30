@@ -30,7 +30,7 @@ public class FacadeManager : MonoBehaviour
     UpdatePanoBlack updatePanoBlack;
     UpdatePanoLabel updatePanoLabel;
     Action<string> LoadCallback;
-    public static Action<string,bool> Act_UpdatePano;
+    public static Action<string, bool> Act_UpdatePano;
     [SerializeField] GameObject panoBlack;
     GameObject panoBlackGo;
     [SerializeField] GameObject pano_Label;
@@ -155,7 +155,7 @@ public class FacadeManager : MonoBehaviour
     {
         if (!pano_LabelGo)
         {
-            pano_LabelGo = Instantiate(pano_Label);
+            pano_LabelGo = Instantiate(pano_Label, Vector3.zero, Quaternion.identity);
         }
 
         updatePanoLabel.UpdateLabel(pano_LabelGo, panoPath);
@@ -202,7 +202,7 @@ public class FacadeManager : MonoBehaviour
     {
         if (Act_UpdatePano != null)
         {
-            Act_UpdatePano(msg,false);
+            Act_UpdatePano(msg, false);
         }
     }
 
