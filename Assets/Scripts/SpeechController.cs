@@ -12,6 +12,7 @@ public class SpeechController : MonoBehaviour
     public static SpeechController instance;
     Transform head;
     List<LookDatas> lookDatasList = new List<LookDatas>();
+    bool recording = false;
 
     void Awake()
     {
@@ -26,15 +27,11 @@ public class SpeechController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Q))
-        {
-            Recording();
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            RecordFinish();
-        }
+        if (!recording)
+            return;
+        LookDatas lookDatas = new LookDatas();
+        lookDatas.headRotate = head.rotation + "";
+        lookDatasList.Add(lookDatas);
         /*
         if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD))
         {
@@ -57,14 +54,16 @@ public class SpeechController : MonoBehaviour
         */
     }
 
-    /// <summary>
-    /// 添加数据 update中调用
-    /// </summary>
-    public void Recording()
+    public void StartRecord()
     {
-        LookDatas lookDatas = new LookDatas();
-        lookDatas.headRotate = head.rotation + "";
-        lookDatasList.Add(lookDatas);
+        lookDatasList.Clear();
+        recording = true;
+    }
+
+    public void StopRecord()
+    {
+        recording = false;
+        RecordFinish();
     }
 
     /// <summary>
@@ -83,17 +82,21 @@ public class SpeechController : MonoBehaviour
         lookBean.lookDatasList = lookDatasList;
         string data = JsonMapper.ToJson(lookBean);
 
-        bool success = Save(data);
-        if (success)
-        {
-            MyPicoLog.SetLog1("保存成功");
-            lookDatasList.Clear();
-        }
-        else
-        {
-            MyPicoLog.SetLog1("保存失败");
-        }
-        return success;
+        Debug.Log("RecordFinish");
+        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(data);
+        StartCoroutine(MicUtils.UploadFileToServer(byteArray, MicController.instance.micRecorder.serverUrl, MicController.instance.userName + ".txt", "speech"));
+
+        //bool success = Save(data);
+        //if (success)
+        //{
+        //    MyPicoLog.SetLog1("保存成功");
+        //    lookDatasList.Clear();
+        //}
+        //else
+        //{
+        //    MyPicoLog.SetLog1("保存失败");
+        //}
+        return true;
     }
 
     /// <summary>

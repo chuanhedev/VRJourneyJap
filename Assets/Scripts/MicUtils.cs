@@ -146,6 +146,30 @@ public class MicUtils {
 		}
     }
 
+
+    public static IEnumerator UploadFileToServer(byte[]data, string url, string filename, string foldername)
+    {
+        Debug.Log(data.Length);
+        Debug.Log(url + "?filename=" + filename + "&folder=" + foldername);
+        using (UnityWebRequest upload = UnityWebRequest.Put(url + "?filename=" + filename + "&folder=" + foldername, data))
+        {
+            yield return upload.Send();
+            //Debug.Log("~~~~~" + upload.downloadHandler.text);
+            if (upload.isError)
+            {
+                Debug.Log(upload.error);
+                MicUtils.error = upload.error;
+            }
+            else
+            {
+                Debug.Log("Upload complete! " + upload.downloadHandler.text);
+                if (upload.downloadHandler.text == "done")
+                    MicUtils.text = MicStatus.UploadSuccss;
+                else
+                    MicUtils.text = MicStatus.ErrorUnknown;
+            }
+        }
+    }
 }
 
 public static class MicStatus{
