@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 11429928}
   - component: {fileID: 11448258}
   - component: {fileID: 11463816}
-  - component: {fileID: 114684376700469230}
   m_Layer: 0
   m_Name: player_VRTypeNew
   m_TagString: Untagged
@@ -1005,7 +1004,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5861,17 +5860,6 @@ MonoBehaviour:
   trigger: 0
   clickTime: 0.1
   hotspot: {x: 0.5, y: 0.5}
---- !u!114 &114684376700469230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 180914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e511b1aa13ac02e43a63e44ddd52a6fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114736645135435966
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/JapEatery.unity
     guid: 2cd56372e4f45ac4f9dbc0ca860d2c0c
   - enabled: 1
+    path: Assets/Scenes/PlayBack.unity
+    guid: d0edcae5cd552184abffd0b2bb54b509
+  - enabled: 1
     path: Assets/Scenes/JapPano_Fukuoka.unity
     guid: 422410ba51e4afa48a32ad77fbb4f07f
   - enabled: 1
