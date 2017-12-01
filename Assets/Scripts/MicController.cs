@@ -55,6 +55,7 @@ public class MicController : MonoBehaviour
         if (state == MicControllerState.Idle)
         {         
             micRecorder.serverUrl = "http://" + ConnectionClientConfig.logicServerIp + ":" + serverPort + "/fileupload";
+            Debug.Log(ConnectionClientConfig.logicServerIp);
             //micRecorder.userName = ConnectionClientConfig.UserId.ToString();
             timer = Time.time;
         }

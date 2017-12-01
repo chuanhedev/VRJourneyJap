@@ -2,31 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class UILoadingBar : MonoBehaviour {
+public class UILoadingBar : MonoBehaviour
+{
     public GameObject barObject;
     public Text mProgress;
     public Image mProgressBar;
     public Slider mSlider;
     public GameObject ClientObj;
+    public GameObject playBackClientObj;
     public static UILoadingBar instance;
     void Awake()
     {
+        instance = this;
         VitoPluginLoadScene.showLoadingBarAction += ShowBar;
         VitoPluginLoadScene.updateLoadingBarAction += UpdateProgress;
     }
+
+    public void ShowClientPlayBack()
+    {
+        if (playBackClientObj) playBackClientObj.SetActive(true);
+    }
+
+    public void HideClientPlayBack()
+    {
+        if (playBackClientObj) playBackClientObj.SetActive(false);
+    }
+
     void ShowBar(bool show)
     {
-        if(show)
+        if (show)
         {
             Show(0);
-        }else
+        }
+        else
         {
             Hide();
         }
     }
     public void Hide()
     {
-        if(barObject.activeSelf)
+        if (barObject.activeSelf)
         {
             barObject.SetActive(false);
             List<Camera> cameras = new List<Camera>();
@@ -59,12 +74,12 @@ public class UILoadingBar : MonoBehaviour {
                     cameras[i].backgroundColor = Color.black;
                 }
             }
-        }        
+        }
     }
 
-    public void Show(float initValue=0)
+    public void Show(float initValue = 0)
     {
-        if(!barObject.activeSelf)
+        if (!barObject.activeSelf)
         {
             if (HostUIManager.instance != null && HostUIManager.instance.uiBG != null)
             {
@@ -107,7 +122,7 @@ public class UILoadingBar : MonoBehaviour {
     public void UpdateProgress(float value)
     {
         value = Mathf.Clamp01(value);
-        mProgress.text = Mathf.FloorToInt(value * 100).ToString()+"%";
+        mProgress.text = Mathf.FloorToInt(value * 100).ToString() + "%";
         mProgressBar.fillAmount = value;
         mSlider.value = value;
     }

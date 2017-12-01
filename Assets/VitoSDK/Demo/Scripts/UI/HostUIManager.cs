@@ -33,16 +33,107 @@ public class HostUIManager : MonoBehaviour
     public Text txtLookedInfo;
     private Dictionary<int, DataSceneConfig> mSceneConfigMap = new Dictionary<int, DataSceneConfig>();
     private string SceneConfigFile = "DataSceneConfig.txt";
+
+    public GameObject leftBtnList;
+    public GameObject studentMicListGo;
+    public GameObject studentMicListItem;
+    public Toggle studentMicListToggle;
+    public Toggle playMicToggle;
+    public Toggle pauseMicToggle;
+    public Transform studentMicListContent;
+
     void OnEnable()
     {
         VitoPlugin.GameIsPlayingListener += OnResponsePause;
         VitoPluginLoadScene.OnLoadSceneListener += OnResponseLoadScene;
+
+        studentMicListToggle.onValueChanged.AddListener(OnStudentMicListChanged);
+        playMicToggle.onValueChanged.AddListener(OnPlayMicChanged);
+        pauseMicToggle.onValueChanged.AddListener(OnPauseMicChanged);
     }
     void OnDisable()
     {
         VitoPlugin.GameIsPlayingListener -= OnResponsePause;
         VitoPluginLoadScene.OnLoadSceneListener -= OnResponseLoadScene;
+
+        studentMicListToggle.onValueChanged.RemoveListener(OnStudentMicListChanged);
+        playMicToggle.onValueChanged.RemoveListener(OnPlayMicChanged);
+        pauseMicToggle.onValueChanged.RemoveListener(OnPauseMicChanged);
     }
+
+    /// <summary>
+    /// 左侧录音菜单
+    /// </summary>
+    /// <param name="isEnable"></param>
+    public void LeftBtnListEnable(bool isEnable)
+    {
+        if (isEnable)
+        {
+            MicToggleEnable(false);
+        }
+        else
+        {
+            studentMicListToggle.isOn = isEnable;
+            studentMicListGo.SetActive(isEnable);
+        }
+
+        leftBtnList.SetActive(isEnable);
+
+    }
+
+    /// <summary>
+    /// 左侧播放和暂停
+    /// </summary>
+    /// <param name="isEnable"></param>
+    public void MicToggleEnable(bool isEnable)
+    {
+        playMicToggle.gameObject.SetActive(isEnable);
+        pauseMicToggle.gameObject.SetActive(isEnable);
+        if (isEnable)
+        {
+            playMicToggle.isOn = isEnable;
+        }
+    }
+
+    /// <summary>
+    /// 学生录音列表
+    /// </summary>
+    /// <param name="isEnable"></param>
+    public void StudentMicListEnable(bool isEnable)
+    {
+        studentMicListGo.SetActive(isEnable);
+        studentMicListToggle.isOn = isEnable;
+    }
+
+    #region mic toggle
+    void OnStudentMicListChanged(bool isOn)
+    {
+        studentMicListGo.SetActive(isOn);
+
+        if (isOn)
+        {
+            PlayBackController.instance.CreateStudentItem(studentMicListItem, studentMicListContent);
+        }
+    }
+
+    void OnPlayMicChanged(bool isOn)
+    {
+        if (isOn)
+        {
+            PlayBackController.instance.ContinuePlayBack();
+        }
+    }
+
+    void OnPauseMicChanged(bool isOn)
+    {
+        if (isOn)
+        {
+            PlayBackController.instance.PausePlayBack();
+        }
+    }
+
+    #endregion
+
 
     void OnResponseLoadScene(string sceneName)
     {

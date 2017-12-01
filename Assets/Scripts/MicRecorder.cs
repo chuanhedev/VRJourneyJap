@@ -30,7 +30,6 @@ public class MicRecorder : MonoBehaviour
 
 	public void Start(){
 		localFolder = Application.persistentDataPath + "/" + localFolder;
-		Debug.Log (serverUrl);
 	}
     // private TimerInfo timerInfo;
     /// <summary>
@@ -150,8 +149,9 @@ public class MicRecorder : MonoBehaviour
     {
 		string filename = DateTime.Now.ToString("yyMMddHHmmss") + ".wav";
 		if (!string.IsNullOrEmpty (userName)) {
-			filename = userName + "_" + filename;
-		}
+            //filename = userName + "_" + filename;
+            filename = userName + ".wav";// + "_" + filename;
+        }
 		MicUtils.Save(clip, localFolder + "/" + filename);
 		yield return MicUtils.Upload(localFolder + "/" + filename, serverUrl);
     }

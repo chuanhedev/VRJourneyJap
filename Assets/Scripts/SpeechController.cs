@@ -19,43 +19,22 @@ public class SpeechController : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        if (!head)
-            head = GetComponentInChildren<Camera>().transform;
-    }
-
-    void Update()
+    void FixedUpdate()
     {
         if (!recording)
             return;
         LookDatas lookDatas = new LookDatas();
         lookDatas.headRotate = head.rotation + "";
         lookDatasList.Add(lookDatas);
-        /*
-        if (Controller.UPvr_GetKeyDown(Pvr_KeyCode.TOUCHPAD))
-        {
-
-        }
-
-        if (Controller.UPvr_GetKey(Pvr_KeyCode.TOUCHPAD))
-        {
-            Recording();
-        }
-
-        if (Controller.UPvr_GetKeyUp(Pvr_KeyCode.TOUCHPAD))
-        {
-            if (RecordFinish())
-            {
-                string result = GetStringData(GetFilePath());
-                MyPicoLog.SetLog2(result);
-            }
-        }
-        */
     }
 
     public void StartRecord()
     {
+        if (!head)
+        {
+            GameObject cameras = GameObject.Find("player_VRTypeNew");
+            head = cameras.GetComponentInChildren<Camera>().transform;
+        }
         lookDatasList.Clear();
         recording = true;
     }
@@ -67,55 +46,22 @@ public class SpeechController : MonoBehaviour
     }
 
     /// <summary>
-    /// 保存
-    /// </summary>
-    public bool RecordFinish()
-    {
-        if (lookDatasList.Count == 0)
-        {
-            Debug.Log("先添加数据"); return false;
-        }
-
-        LookBean lookBean = new LookBean();
-        lookBean.userId = VitoPlugin.UserId;
-        lookBean.scene = SceneManager.GetActiveScene().name;
-        lookBean.lookDatasList = lookDatasList;
-        string data = JsonMapper.ToJson(lookBean);
-
-        Debug.Log("RecordFinish");
-        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(data);
-        StartCoroutine(MicUtils.UploadFileToServer(byteArray, MicController.instance.micRecorder.serverUrl, MicController.instance.userName + ".txt", "speech"));
-
-        //bool success = Save(data);
-        //if (success)
-        //{
-        //    MyPicoLog.SetLog1("保存成功");
-        //    lookDatasList.Clear();
-        //}
-        //else
-        //{
-        //    MyPicoLog.SetLog1("保存失败");
-        //}
-        return true;
-    }
-
-    /// <summary>
     /// 获取保存的数据
     /// </summary>
     /// <param name="filePath">文件目录</param>
-    /// <param name="userId">id</param>
+    /// <param name="deviceId">名字</param>
     /// <param name="scene">场景</param>
     /// <param name="qList">旋转</param>
-    public void GetRecordData(string filePath, out int userId, out string scene, out List<Quaternion> qList)
+    public void GetRecordData(string filePath, out string deviceId, out string scene, out List<Quaternion> qList)
     {
-        int id = 0;
+        string id = "";
         string sceneString = "";
         List<Quaternion> headRotateList = new List<Quaternion>();
         string jsonText = GetStringData(filePath);
         try
         {
             LookBean dataBean = JsonMapper.ToObject<LookBean>(jsonText, false);
-            id = dataBean.userId;
+            id = dataBean.deviceId;
             sceneString = dataBean.scene;
             foreach (LookDatas lookData in dataBean.lookDatasList)
             {
@@ -161,9 +107,41 @@ public class SpeechController : MonoBehaviour
         {
             Debug.Log(e.StackTrace);
         }
-        userId = id;
+        deviceId = id;
         scene = sceneString;
         qList = headRotateList;
+    }
+
+    /// <summary>
+    /// 保存
+    /// </summary>
+    bool RecordFinish()
+    {
+        if (lookDatasList.Count == 0)
+        {
+            Debug.Log("先添加数据"); return false;
+        }
+
+        LookBean lookBean = new LookBean();
+        lookBean.deviceId = VitoPlugin.DeviceID;
+        lookBean.scene = SceneManager.GetActiveScene().name;
+        lookBean.lookDatasList = lookDatasList;
+        string data = JsonMapper.ToJson(lookBean);
+
+        byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(data);
+        StartCoroutine(MicUtils.UploadFileToServer(byteArray, MicController.instance.micRecorder.serverUrl, MicController.instance.userName + ".txt", "speech"));
+
+        //bool success = Save(data);
+        //if (success)
+        //{
+        //    MyPicoLog.SetLog1("保存成功");
+        //    lookDatasList.Clear();
+        //}
+        //else
+        //{
+        //    MyPicoLog.SetLog1("保存失败");
+        //}
+        return true;
     }
 
     /// <summary>
@@ -190,11 +168,12 @@ public class SpeechController : MonoBehaviour
     /// 数据的路径
     /// </summary>
     /// <returns></returns>
-    string GetFilePath()
-    {
-        return Application.persistentDataPath + "/SpeechData/" + VitoPlugin.DeviceID + ".txt";
-    }
+    //string GetFilePath()
+    //{
+    //    return Application.persistentDataPath + "/SpeechData/" + VitoPlugin.DeviceID + ".txt";
+    //}
 
+    /*
     bool Save(string data)
     {
         string path = Application.persistentDataPath + "/SpeechData";
@@ -222,11 +201,12 @@ public class SpeechController : MonoBehaviour
         Debug.Log("保存的目录：" + filePath);
         return true;
     }
+    */
 }
 
 public class LookBean
 {
-    public int userId;
+    public string deviceId;
     public string scene;
     public List<LookDatas> lookDatasList;
 }

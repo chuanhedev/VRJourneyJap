@@ -73,8 +73,8 @@ public class HideSceneList : MonoBehaviour
 
         if (sceneList.activeSelf)
         {
-            child4 = content.GetChild(3).gameObject;
-            child5 = content.GetChild(4).gameObject;
+            child4 = content.GetChild(4).gameObject;
+            child5 = content.GetChild(5).gameObject;
             if (PlayerPrefs.GetInt("Refresh1") != 1)
                 if (child4) child4.SetActive(false);
             if (PlayerPrefs.GetInt("Refresh2") != 1)

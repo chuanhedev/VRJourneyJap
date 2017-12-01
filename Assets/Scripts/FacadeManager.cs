@@ -45,6 +45,10 @@ public class FacadeManager : MonoBehaviour
         LoadCallback += OnLoadCallback;
 
         RegisterUpdatePano();
+
+        //UserInfoData userInfoData = UserInfoManager.instance.getHistoryUserData("2c4552f8145bc7909196bdb433ad0ac7");
+
+        //Debug.Log(userInfoData);
     }
 
     void OnEnable()
