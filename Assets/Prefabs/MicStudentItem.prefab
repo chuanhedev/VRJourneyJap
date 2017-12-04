@@ -74,7 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83d55fd1580d5d4c94a57591d39bf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 1, g: 0.7294118, b: 0, a: 0.72156864}
+  enterColor: {r: 1, g: 0.7294118, b: 0, a: 0.72156864}
+  clickedColor: {r: 0.79699993, g: 0.797, b: 0.79699993, a: 0.734}
 --- !u!114 &114223567050665308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -215,8 +216,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 38, y: 0}
-  m_SizeDelta: {x: -136, y: 0}
+  m_AnchoredPosition: {x: 41, y: 0}
+  m_SizeDelta: {x: -94, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224482749478525690
 RectTransform:
@@ -233,6 +234,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 19, y: 12}
+  m_AnchoredPosition: {x: 19, y: 9.2}
   m_SizeDelta: {x: 50, y: 59}
   m_Pivot: {x: 0.000000022351742, y: 0.5}
