@@ -22,7 +22,6 @@ public class GrabObjectManager : MonoBehaviour
         {
             grabObjectStates[i].ResetObject();
         }
-
     }
 
     public void SetAllTrigger(bool isTrigger)
@@ -35,20 +34,13 @@ public class GrabObjectManager : MonoBehaviour
         }
     }
 
-    public void SetSync(GrabObjectState grabObjectState)
+    public void SetUnitInfoEnable(bool enable)
     {
         if (grabObjectStates == null) return;
 
         for (int i = 0; i < grabObjectStates.Length; i++)
         {
-            if (grabObjectStates[i] == grabObjectState)
-            {
-                grabObjectStates[i].GetComponent<UnitInfo>().enabled = true;
-            }
-            else
-            {
-                grabObjectStates[i].GetComponent<UnitInfo>().enabled = false;
-            }
+            grabObjectStates[i].GetComponent<UnitInfo>().enabled = enable;
         }
     }
 

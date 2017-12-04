@@ -7,7 +7,7 @@ public class UpdatePanoBlack
 {
     FacadeManager facadeManager;
     LivePano_SceneTransition livePano_SceneTransition;
-    string panoPath;
+    public string panoPath { get; private set; }
 
     public UpdatePanoBlack(FacadeManager facadeManager)
     {
@@ -16,18 +16,18 @@ public class UpdatePanoBlack
 
     public void UpdatePano(LivePano_SceneTransition livePano_SceneTransition, string panoPath)
     {
-
         this.panoPath = panoPath;
         this.livePano_SceneTransition = livePano_SceneTransition;
 
         facadeManager.StartCoroutine(Updatepano());
     }
 
-    public void UpdatePano(string panoPath)
+    public void UpdatePano(string panoPath, bool showLabel)
     {
         this.panoPath = panoPath;
         facadeManager.LoadPano(panoPath);
-        facadeManager.UpdateLabel(panoPath);
+        if (showLabel)
+            facadeManager.UpdateLabel(panoPath);
     }
 
     IEnumerator Updatepano()

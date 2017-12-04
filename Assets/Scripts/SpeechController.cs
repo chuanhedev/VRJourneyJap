@@ -50,19 +50,21 @@ public class SpeechController : MonoBehaviour
     /// </summary>
     /// <param name="filePath">文件目录</param>
     /// <param name="deviceId">名字</param>
-    /// <param name="scene">场景</param>
+    /// <param name="panoPath">场景</param>
     /// <param name="qList">旋转</param>
-    public void GetRecordData(string filePath, out string deviceId, out string scene, out List<Quaternion> qList)
+    public void GetRecordData(string filePath, out string deviceId, out string panoPath, out string micTimer, out List<Quaternion> qList)
     {
         string id = "";
-        string sceneString = "";
+        string panoPathString = "";
+        string micLength = "";
         List<Quaternion> headRotateList = new List<Quaternion>();
         string jsonText = GetStringData(filePath);
         try
         {
             LookBean dataBean = JsonMapper.ToObject<LookBean>(jsonText, false);
             id = dataBean.deviceId;
-            sceneString = dataBean.scene;
+            panoPathString = dataBean.panoPath;
+            micLength = dataBean.micTimer;
             foreach (LookDatas lookData in dataBean.lookDatasList)
             {
                 string rotateString = lookData.headRotate;
@@ -108,7 +110,8 @@ public class SpeechController : MonoBehaviour
             Debug.Log(e.StackTrace);
         }
         deviceId = id;
-        scene = sceneString;
+        panoPath = panoPathString;
+        micTimer = micLength;
         qList = headRotateList;
     }
 
@@ -124,7 +127,8 @@ public class SpeechController : MonoBehaviour
 
         LookBean lookBean = new LookBean();
         lookBean.deviceId = VitoPlugin.DeviceID;
-        lookBean.scene = SceneManager.GetActiveScene().name;
+        lookBean.panoPath = FacadeManager._instance.GetPanoPath();
+        lookBean.micTimer = MicController.instance.txtTimer.text;
         lookBean.lookDatasList = lookDatasList;
         string data = JsonMapper.ToJson(lookBean);
 
@@ -207,7 +211,8 @@ public class SpeechController : MonoBehaviour
 public class LookBean
 {
     public string deviceId;
-    public string scene;
+    public string panoPath;
+    public string micTimer;
     public List<LookDatas> lookDatasList;
 }
 

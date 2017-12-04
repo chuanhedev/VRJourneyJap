@@ -8,6 +8,6 @@ public class Pano_Box : MonoBehaviour
 
     void OnEnable()
     {
-        FacadeManager._instance.UpdatePano(firstScene,true);
+        FacadeManager._instance.UpdatePano(firstScene, false, true);
     }
 }

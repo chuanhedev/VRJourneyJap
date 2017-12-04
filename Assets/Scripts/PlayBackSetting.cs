@@ -11,12 +11,6 @@ public class PlayBackSetting : MonoBehaviour
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     void Init()
     {
         if (VitoPlugin.CT == CtrlType.Admin)
@@ -30,12 +24,19 @@ public class PlayBackSetting : MonoBehaviour
 
             HostUIManager.instance.LeftBtnListEnable(true);
             CameraController cameraController = head.GetComponent<CameraController>();
+            MyController myController = head.GetComponent<MyController>();
             if (cameraController) cameraController.enabled = false;
+            if (myController) myController.enabled = false;
         }
         else
         {
             if (UILoadingBar.instance)
                 UILoadingBar.instance.ShowClientPlayBack();
+
+            GameObject pano_Box = GameObject.Find("Pano_Box");
+            pano_Box.SetActive(false);
+
+            MicController.instance.enabled = false;
         }
     }
 
@@ -50,6 +51,8 @@ public class PlayBackSetting : MonoBehaviour
         {
             if (UILoadingBar.instance)
                 UILoadingBar.instance.HideClientPlayBack();
+
+            MicController.instance.enabled = true;
         }
     }
 }

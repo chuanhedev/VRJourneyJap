@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class GrabObjectState : MonoBehaviour
 {
-    [HideInInspector] public ObjectGripState objectGripState = ObjectGripState.None;
-    [SerializeField] Transform parent;
+    [HideInInspector]
+    public ObjectGripState objectGripState = ObjectGripState.None;
+    [SerializeField]
+    Transform parent;
     Rigidbody _rigidbody;
     public bool IsHandTrigger { get; set; }
+    bool isMaster;
 
     public Transform Parent
     {
@@ -23,9 +26,20 @@ public class GrabObjectState : MonoBehaviour
         Init();
     }
 
-    void Start()
+    void Update()
     {
-        //Init();
+        if (VitoPlugin.CT == CtrlType.Admin) return;
+
+        if (VitoPlugin.isMaster && !isMaster)
+        {
+            isMaster = true;
+            _rigidbody.MovePosition(transform.position + Vector3.up * 0.01f);
+        }
+        else
+        {
+            if (!VitoPlugin.isMaster)
+                isMaster = false;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -79,7 +93,7 @@ public class GrabObjectState : MonoBehaviour
         }
         // Debug.Log("SetTrigger-------");
     }
-     
+
     /// <summary>
     /// 重置物体
     /// </summary>

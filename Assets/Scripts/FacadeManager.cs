@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public enum Mode
 {
     Controller,
-    Leap
+    Leap,
 }
 
 public enum VitoMode
@@ -20,8 +20,10 @@ public enum VitoMode
 public class FacadeManager : MonoBehaviour
 {
     public static FacadeManager _instance;
-    [HideInInspector] public Mode mode = Mode.Controller;//手柄和leap模式
-    [HideInInspector] public VitoMode vitoMode = VitoMode.Free;//自由和管理模式
+    [HideInInspector]
+    public Mode mode = Mode.Controller;//手柄和leap模式
+    [HideInInspector]
+    public VitoMode vitoMode = VitoMode.Free;//自由和管理模式
     //[SerializeField] GameObject menu;
     public Material[] panoMats;
     RefreshPanoManager refreshPanoManager;
@@ -30,10 +32,12 @@ public class FacadeManager : MonoBehaviour
     UpdatePanoBlack updatePanoBlack;
     UpdatePanoLabel updatePanoLabel;
     Action<string> LoadCallback;
-    public static Action<string, bool> Act_UpdatePano;
-    [SerializeField] GameObject panoBlack;
+    public static Action<string, bool,bool> Act_UpdatePano;
+    [SerializeField]
+    GameObject panoBlack;
     GameObject panoBlackGo;
-    [SerializeField] GameObject pano_Label;
+    [SerializeField]
+    GameObject pano_Label;
     GameObject pano_LabelGo;
     GameObject leap;
     GameObject japEatery;
@@ -165,6 +169,11 @@ public class FacadeManager : MonoBehaviour
         updatePanoLabel.UpdateLabel(pano_LabelGo, panoPath);
     }
 
+    public string GetPanoPath()
+    {
+        return updatePanoBlack.panoPath;
+    }
+
     /// <summary>
     /// 执行同步切换pano
     /// </summary>
@@ -175,18 +184,18 @@ public class FacadeManager : MonoBehaviour
     }
 
     #region 切换pano
-    public void UpdatePano(string panoPath, bool isAwake)
+    public void UpdatePano(string panoPath, bool anim, bool showLabel)
     {
-        if (isAwake)
-        {
-            updatePanoBlack.UpdatePano(panoPath);
-        }
-        else
+        if (anim)
         {
             if (panoBlackGo) return;
             panoBlackGo = Instantiate(panoBlack);
             LivePano_SceneTransition livePano_SceneTransition = panoBlackGo.GetComponent<LivePano_SceneTransition>();
             updatePanoBlack.UpdatePano(livePano_SceneTransition, panoPath);
+        }
+        else
+        {
+            updatePanoBlack.UpdatePano(panoPath, showLabel);
         }
     }
 
@@ -206,7 +215,7 @@ public class FacadeManager : MonoBehaviour
     {
         if (Act_UpdatePano != null)
         {
-            Act_UpdatePano(msg, false);
+            Act_UpdatePano(msg, true,true);
         }
     }
 

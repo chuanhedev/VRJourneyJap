@@ -112,7 +112,7 @@ public class HostUIManager : MonoBehaviour
 
         if (isOn)
         {
-            PlayBackController.instance.CreateStudentItem(studentMicListItem, studentMicListContent);
+            StartCoroutine(PlayBackController.instance.UpdateStudentItem(studentMicListItem, studentMicListContent));
         }
     }
 

@@ -8,21 +8,23 @@ using UnityEngine.UI;
 public class MicStudentItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField]
-    Color color;
+    Color enterColor;
+    [SerializeField]
+    Color clickedColor;
     Image bg;
     Text studentInfo;
     List<Quaternion> qList = new List<Quaternion>();
     string deviceId;
-    string scene;
+    string panoPath;
+    string micTimer;
+    bool isClicked;//已经点击
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
         //播放录音
         if (PlayBackController.instance.StartPlayBack(deviceId))
         {
-            HostUIManager hostUIManager = GetComponentInParent<HostUIManager>();
-            hostUIManager.MicToggleEnable(true);
-            hostUIManager.StudentMicListEnable(false);
+            CheckUI();
         }
     }
 
@@ -41,27 +43,47 @@ public class MicStudentItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Find();
     }
 
+    void CheckUI()
+    {
+        HostUIManager hostUIManager = GetComponentInParent<HostUIManager>();
+        hostUIManager.MicToggleEnable(true);
+        hostUIManager.StudentMicListEnable(false);
+        isClicked = true;
+        SetBgColor(false);
+        FacadeManager._instance.UpdatePano(panoPath, false,false);
+    }
+
     /// <summary>
     /// 初始化数据
     /// </summary>
     /// <param name="deviceId"></param>
-    /// <param name="scene"></param>
+    /// <param name="panoPath"></param>
     /// <param name="qList"></param>
-    public void InitData(string deviceId, string scene, List<Quaternion> qList)
+    public void InitData(string deviceId, string panoPath, string micTimer, List<Quaternion> qList)
     {
         this.deviceId = deviceId;
-        this.scene = scene;
+        this.panoPath = panoPath;
+        this.micTimer = micTimer;
         this.qList = qList;
 
-        InitData();
+        SetStudentInfo();
     }
 
     void SetBgColor(bool isEnter)
     {
         if (isEnter)
-            bg.color = color;
+            bg.color = enterColor;
         else
-            bg.color = Color.white;
+        {
+            if (isClicked)
+            {
+                bg.color = clickedColor;
+            }
+            else
+            {
+                bg.color = Color.white;
+            }
+        }
     }
 
     void Find()
@@ -70,17 +92,19 @@ public class MicStudentItem : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         studentInfo = GetComponentInChildren<Text>();
     }
 
-    void InitData()
+    void SetStudentInfo()
     {
-        UserInfoData userInfoData = UserInfoManager.instance.GetUserInfoWithDeviceId(deviceId);
+        UserInfoData userInfoData = UserInfoManager.instance.getHistoryUserData(deviceId);
 
+        string userName;
         if (userInfoData != null)
         {
-            studentInfo.text = userInfoData.name;
+            userName = userInfoData.name;
         }
         else
         {
-            studentInfo.text = "未录入";
+            userName = "未录入";
         }
+        studentInfo.text = userName + " 时长：" + micTimer + "''";
     }
 }
